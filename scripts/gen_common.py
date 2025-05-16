@@ -23,6 +23,7 @@ type_names = re.findall(
     schema_block,
 )
 
+added_names = []
 
 if not type_names:
     raise ValueError("❌ No types found under components.schemas")
@@ -32,6 +33,11 @@ lines = ["import type { components } from './api'\n"]
 
 for name in type_names:
     print(name)
+
+    if name.endswith("Base"):
+        continue
+
+    added_names.append(name)
 
     # 기본 타입 정의
     lines.append(f"export type {name} = components['schemas']['{name}']")
@@ -55,4 +61,4 @@ for name in type_names:
 
 # 파일 출력
 OUT_FILE.write_text("\n".join(lines) + "\n", encoding="utf-8")
-print(f"✅ common.ts generated with: {', '.join(type_names)}")
+print(f"✅ common.ts generated with: {', '.join(added_names)}")

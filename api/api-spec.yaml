@@ -57,7 +57,7 @@ paths:
 
 components:
   schemas:
-    BaseResponse:
+    ResponseBase:
       type: object
       properties:
         data:
@@ -66,14 +66,17 @@ components:
         error:
           type: object
           nullable: true
-        properties:
-          code:
-            type: string
-          message:
-            type: string
-          details:
-            type: object
-            nullable: true
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+              nullable: true
+            details:
+              type: object
+              nullable: true
+          required:
+            - code
 
     AuthLoginRequest:
       type: object
@@ -89,7 +92,7 @@ components:
 
     AuthLoginResponse:
       allOf:
-        - $ref: "#/components/schemas/BaseResponse"
+        - $ref: "#/components/schemas/ResponseBase"
         - type: object
           properties:
             data:
@@ -99,7 +102,7 @@ components:
 
     UserListResponse:
       allOf:
-        - $ref: "#/components/schemas/BaseResponse"
+        - $ref: "#/components/schemas/ResponseBase"
         - type: object
           properties:
             data:
@@ -113,7 +116,7 @@ components:
 
     UserCreateResponse:
       allOf:
-        - $ref: "#/components/schemas/BaseResponse"
+        - $ref: "#/components/schemas/ResponseBase"
         - type: object
           properties:
             data:
