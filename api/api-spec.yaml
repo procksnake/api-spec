@@ -24,14 +24,43 @@ paths:
               schema:
                 $ref: "#/components/schemas/AuthLoginResponse"
 
+  /auth/logout:
+    post:
+      summary: User logout
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: false
+      responses:
+        "200":
+          description: Logout success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIResponse"
+
   /users:
     get:
       summary: Get user list
-      security:
-        - bearerAuth: [] # optional (필요 시 per-path로도 가능)
+      operationId: listUsers
+      parameters:
+        - name: page
+          in: query
+          description: Page number to retrieve
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 30
       responses:
         "200":
-          description: List of users
+          description: Successfully retrieved user list
           content:
             application/json:
               schema:
@@ -46,7 +75,7 @@ paths:
             schema:
               $ref: "#/components/schemas/UserCreateRequest"
       security:
-        - bearerAuth: [] # optional (필요 시 per-path로도 가능)
+        - bearerAuth: ["read:admin"]
       responses:
         "201":
           description: User created
@@ -57,12 +86,28 @@ paths:
 
 components:
   schemas:
-    ResponseBase:
+    APIResponse:
       type: object
       properties:
         data:
           type: object
           nullable: true
+        pagination:
+          type: object
+          nullable: true
+          properties:
+            total:
+              type: integer
+              description: Total number of items
+            page:
+              type: integer
+              description: Current page number
+            limit:
+              type: integer
+              description: Number of items per page
+            totalPages:
+              type: integer
+              description: Total number of pages
         error:
           type: object
           nullable: true
@@ -81,18 +126,17 @@ components:
     AuthLoginRequest:
       type: object
       required:
-        - email
+        - username
         - password
       properties:
-        email:
+        username:
           type: string
-          format: email
         password:
           type: string
 
     AuthLoginResponse:
       allOf:
-        - $ref: "#/components/schemas/ResponseBase"
+        - $ref: "#/components/schemas/APIResponse"
         - type: object
           properties:
             data:
@@ -102,7 +146,7 @@ components:
 
     UserListResponse:
       allOf:
-        - $ref: "#/components/schemas/ResponseBase"
+        - $ref: "#/components/schemas/APIResponse"
         - type: object
           properties:
             data:
@@ -116,7 +160,7 @@ components:
 
     UserCreateResponse:
       allOf:
-        - $ref: "#/components/schemas/ResponseBase"
+        - $ref: "#/components/schemas/APIResponse"
         - type: object
           properties:
             data:
