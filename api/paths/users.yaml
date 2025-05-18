@@ -1,0 +1,119 @@
+user:
+  get:
+    x-ogen-operation-group: User
+    tags:
+      - User
+    summary: Get a specific user
+    operationId: getUser
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the user to retrieve
+        schema:
+          type: integer
+    responses:
+      "200":
+        description: Successfully retrieved user
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/user.yaml#/UserGetResponse"
+      "404":
+        description: User not found
+
+  put:
+    x-ogen-operation-group: User
+    tags:
+      - User
+    summary: Update a specific user
+    operationId: updateUser
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the user to update
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/user.yaml#/UserUpdateRequest"
+    responses:
+      "200":
+        description: User updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/user.yaml#/UserUpdateResponse"
+
+  delete:
+    x-ogen-operation-group: User
+    tags:
+      - User
+    summary: Delete a specific user
+    operationId: deleteUser
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the user to delete
+        schema:
+          type: integer
+    responses:
+      "204":
+        description: User deleted successfully
+
+users:
+  get:
+    x-ogen-operation-group: User
+    tags:
+      - User
+    summary: Get user list
+    operationId: listUsers
+    parameters:
+      - name: page
+        in: query
+        description: Page number to retrieve
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        description: Number of items per page
+        required: false
+        schema:
+          type: integer
+          default: 30
+    responses:
+      "200":
+        description: Successfully retrieved user list
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/user.yaml#/UserListResponse"
+
+  post:
+    x-ogen-operation-group: User
+    tags:
+      - User
+    summary: Create user
+    operationId: createUser
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/user.yaml#/UserCreateRequest"
+    security:
+      - bearerAuth: ["read:admin"]
+    responses:
+      "201":
+        description: User created
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/user.yaml#/UserCreateResponse"

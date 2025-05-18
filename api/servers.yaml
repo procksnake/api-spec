@@ -1,0 +1,7 @@
+production:
+  url: https://your-api-base-url.com
+  description: Production server
+
+development:
+  url: http://localhost:8080/api
+  description: Development server

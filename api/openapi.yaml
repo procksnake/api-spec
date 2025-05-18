@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info:
+  title: Sample API Spec
+  version: 1.0.0
+
+# 서버 정보 참조
+servers:
+  - $ref: "./servers.yaml#/production"
+  - $ref: "./servers.yaml#/development"
+
+# 보안 정의 참조
+security:
+  - bearerAuth: []
+
+# 경로 참조
+paths:
+  /auth/login:
+    $ref: "./paths/auth.yaml#/login"
+  /auth/logout:
+    $ref: "./paths/auth.yaml#/logout"
+  /users/{id}:
+    $ref: "./paths/users.yaml#/user"
+  /users:
+    $ref: "./paths/users.yaml#/users"
+
+# 공통 컴포넌트
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: "./components/security.yaml#/bearerAuth"
+  schemas:
+    # 공통 스키마 참조
+    APIResponse:
+      $ref: "./components/schemas/common.yaml#/APIResponse"
+
+    # 인증 관련 스키마 참조
+    AuthLoginRequest:
+      $ref: "./components/schemas/auth.yaml#/AuthLoginRequest"
+    AuthLoginResponse:
+      $ref: "./components/schemas/auth.yaml#/AuthLoginResponse"
+    LoginData:
+      $ref: "./components/schemas/auth.yaml#/LoginData"
+
+    # 사용자 관련 스키마 참조
+    UserBase:
+      $ref: "./components/schemas/user.yaml#/UserBase"
+    User:
+      $ref: "./components/schemas/user.yaml#/User"
+    UserListResponse:
+      $ref: "./components/schemas/user.yaml#/UserListResponse"
+    UserGetResponse:
+      $ref: "./components/schemas/user.yaml#/UserGetResponse"
+    UserCreateRequest:
+      $ref: "./components/schemas/user.yaml#/UserCreateRequest"
+    UserCreateResponse:
+      $ref: "./components/schemas/user.yaml#/UserCreateResponse"
+    UserUpdateRequest:
+      $ref: "./components/schemas/user.yaml#/UserUpdateRequest"
+    UserUpdateResponse:
+      $ref: "./components/schemas/user.yaml#/UserUpdateResponse"

@@ -1,0 +1,317 @@
+openapi: 3.0.0
+info:
+  title: Sample API Spec
+  version: 1.0.0
+servers:
+  - url: https://your-api-base-url.com
+    description: Production server
+  - url: http://localhost:8080/api
+    description: Development server
+
+security:
+  - bearerAuth: []
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: User login
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthLoginRequest"
+      responses:
+        "200":
+          description: Login success response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthLoginResponse"
+
+  /auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: User logout
+      operationId: logout
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: false
+      responses:
+        "200":
+          description: Logout success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIResponse"
+
+  /users/{id}:
+    get:
+      tags:
+        - User
+      summary: Get a specific user
+      operationId: getUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the user to retrieve
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully retrieved user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserGetResponse"
+        "404":
+          description: User not found
+
+    put:
+      tags:
+        - User
+      summary: Update a specific user
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the user to update
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateRequest"
+      responses:
+        "200":
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserUpdateResponse"
+
+    delete:
+      tags:
+        - User
+      summary: Delete a specific user
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the user to delete
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: User deleted successfully
+
+  /users:
+    get:
+      tags:
+        - User
+      summary: Get user list
+      operationId: listUsers
+      parameters:
+        - name: page
+          in: query
+          description: Page number to retrieve
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 30
+      responses:
+        "200":
+          description: Successfully retrieved user list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserListResponse"
+
+    post:
+      tags:
+        - User
+      summary: Create user
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreateRequest"
+      security:
+        - bearerAuth: ["read:admin"]
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCreateResponse"
+
+components:
+  schemas:
+    APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          nullable: true
+        pagination:
+          type: object
+          nullable: true
+          properties:
+            total:
+              type: integer
+              description: Total number of items
+            page:
+              type: integer
+              description: Current page number
+            limit:
+              type: integer
+              description: Number of items per page
+            totalPages:
+              type: integer
+              description: Total number of pages
+        error:
+          type: object
+          nullable: true
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+              nullable: true
+            details:
+              type: object
+              nullable: true
+          required:
+            - code
+
+    AuthLoginRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+
+    AuthLoginResponse:
+      allOf:
+        - $ref: "#/components/schemas/APIResponse"
+        - type: object
+          properties:
+            data:
+              $ref: "#/components/schemas/LoginData"
+
+    #UserListRequest //
+
+    UserListResponse:
+      allOf:
+        - $ref: "#/components/schemas/APIResponse"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/User"
+
+    UserGetResponse:
+      allOf:
+        - $ref: "#/components/schemas/APIResponse"
+        - type: object
+          properties:
+            data:
+              $ref: "#/components/schemas/User"
+
+    UserCreateRequest:
+      allOf:
+        - $ref: "#/components/schemas/UserBase"
+
+    UserCreateResponse:
+      allOf:
+        - $ref: "#/components/schemas/APIResponse"
+        - type: object
+          properties:
+            data:
+              $ref: "#/components/schemas/User"
+
+    UserUpdateRequest:
+      allOf:
+        - $ref: "#/components/schemas/UserBase"
+
+    UserUpdateResponse:
+      allOf:
+        - $ref: "#/components/schemas/APIResponse"
+        - type: object
+          properties:
+            data:
+              $ref: "#/components/schemas/User"
+
+    LoginData:
+      type: object
+      required:
+        - token
+        - user
+      properties:
+        token:
+          type: string
+        user:
+          $ref: "#/components/schemas/User"
+
+    UserBase:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Alice
+        email:
+          type: string
+          format: email
+          example: alice@example.com
+        role:
+          type: string
+          example: user
+        phonenumber:
+          type: string
+          pattern: '^010\d{7}$'
+          format: phonenumber
+          example: 01012345678
+        companyId:
+          type: integer
+          example: 101
+
+      required:
+        - name
+        - email
+        - role
+
+    User:
+      allOf:
+        - $ref: "#/components/schemas/UserBase"
+        - type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+          required:
+            - id

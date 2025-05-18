@@ -1,0 +1,36 @@
+APIResponse:
+  type: object
+  properties:
+    data:
+      type: object
+      nullable: true
+    pagination:
+      type: object
+      nullable: true
+      properties:
+        total:
+          type: integer
+          description: Total number of items
+        page:
+          type: integer
+          description: Current page number
+        limit:
+          type: integer
+          description: Number of items per page
+        totalPages:
+          type: integer
+          description: Total number of pages
+    error:
+      type: object
+      nullable: true
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          nullable: true
+        details:
+          type: object
+          nullable: true
+      required:
+        - code

@@ -1,0 +1,83 @@
+UserBase:
+  type: object
+  properties:
+    name:
+      type: string
+      example: Alice
+    email:
+      type: string
+      format: email
+      example: alice@example.com
+    role:
+      type: string
+      example: user
+    phonenumber:
+      type: string
+      pattern: '^010\d{7}$'
+      format: phonenumber
+      example: 01012345678
+    companyId:
+      type: integer
+      example: 101
+  required:
+    - name
+    - email
+    - role
+
+User:
+  allOf:
+    - $ref: "#/UserBase"
+    - type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+      required:
+        - id
+
+UserListResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          type: object
+          properties:
+            lists:
+              type: array
+              items:
+                $ref: "#/User"
+          required:
+            - lists
+
+UserGetResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/User"
+
+UserCreateRequest:
+  allOf:
+    - $ref: "#/UserBase"
+
+UserCreateResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/User"
+
+UserUpdateRequest:
+  allOf:
+    - $ref: "#/UserBase"
+
+UserUpdateResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/User"

@@ -1,0 +1,29 @@
+AuthLoginRequest:
+  type: object
+  required:
+    - username
+    - password
+  properties:
+    username:
+      type: string
+    password:
+      type: string
+
+AuthLoginResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/LoginData"
+
+LoginData:
+  type: object
+  required:
+    - token
+    - user
+  properties:
+    token:
+      type: string
+    user:
+      $ref: "../schemas/user.yaml#/User"
