@@ -11,11 +11,13 @@ SASTokenData:
       type: string
       format: date-time
       description: 토큰 만료 시간
+  required:
+    - sasToken
+    - url
+    - expiryTime
 
 AzureStorageCreateSASTokenRequest:
   type: object
-  required:
-    - containerName
   properties:
     containerName:
       type: string
@@ -26,11 +28,13 @@ AzureStorageCreateSASTokenRequest:
     expiryHours:
       type: integer
       description: (선택사항) 토큰 만료 시간(시간 단위)
+  required:
+    - containerName
 
 AzureStorageCreateSASTokenResponse:
   allOf:
-    - $ref: '../schemas/common.yaml#/APIResponse'
+    - $ref: "../schemas/common.yaml#/APIResponse"
     - type: object
       properties:
         data:
-          $ref: '#/SASTokenData'
+          $ref: "#/SASTokenData"
