@@ -10,10 +10,11 @@ API_DIR = api
 BUNDLED_DIR = bundled
 API_YAML_FILES := $(shell find $(API_DIR) -name "*.yaml")
 BUNDLED_API = $(BUNDLED_DIR)/api.yaml
+RENAME_SCRIPT = rename-file.py 
 
 .PHONY: gen-ts gen-common gen-go gen ts-api-gen ogen clean
 
-gen: gen-ts gen-common gen-go
+gen: ts-api-gen gen-go
 
 $(BUNDLED_DIR):
 	mkdir -p $@
@@ -23,12 +24,14 @@ $(BUNDLED_API): $(API_YAML_FILES) | $(BUNDLED_DIR)
 	npx @redocly/cli bundle $(API_DIR)/openapi.yaml -o $@
 
 # TypeScript 코드 생성 규칙
-$(TS_API_GEN): $(BUNDLED_API)
+$(TS_API_GEN): $(BUNDLED_API) $(RENAME_SCRIPT)
 	npx openapi-typescript-codegen --input $< --output $@ --useOptions --useUnionTypes
+	python $(RENAME_SCRIPT) 
 
 ts-api-gen: $(TS_API_GEN)
 
 $(GO_GEN): $(BUNDLED_API)
+	mkdir -p backend/internal/model
 	oapi-codegen -package model -generate types -o $@ $< 
 
 gen-go-models: $(GO_GEN)
