@@ -8,7 +8,7 @@ APIKeyCreateRequest:
 
 APIKeyCreateResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:

@@ -1,0 +1,36 @@
+SASTokenData:
+  type: object
+  properties:
+    sasToken:
+      type: string
+      description: 생성된 SAS 토큰
+    url:
+      type: string
+      description: 토큰이 포함된 완전한 접근 URL
+    expiryTime:
+      type: string
+      format: date-time
+      description: 토큰 만료 시간
+
+AzureStorageCreateSASTokenRequest:
+  type: object
+  required:
+    - containerName
+  properties:
+    containerName:
+      type: string
+      description: Azure Storage 컨테이너 이름
+    blobName:
+      type: string
+      description: (선택사항) 특정 Blob 이름
+    expiryHours:
+      type: integer
+      description: (선택사항) 토큰 만료 시간(시간 단위)
+
+AzureStorageCreateSASTokenResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/SASTokenData'

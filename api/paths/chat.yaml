@@ -16,14 +16,14 @@ completions:
             type: object
             description: Any valid request body (passed through as-is)
     responses:
-      "200":
+      '200':
         description: Successful response (forwarded from backend)
         content:
           application/json:
             schema:
               type: object
               description: Response forwarded from backend service
-      "4XX":
+      '4XX':
         description: Error response (forwarded from backend)
-      "5XX":
+      '5XX':
         description: Server error (forwarded from backend)
