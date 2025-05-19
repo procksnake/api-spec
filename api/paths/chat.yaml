@@ -1,0 +1,29 @@
+completions:
+  post:
+    tags:
+      - Proxy
+    summary: Chat completions endpoint (bypass)
+    description: |
+      This endpoint acts as a proxy and bypasses normal API processing.
+      Requests are directly forwarded to the underlying service.
+    operationId: chatCompletions
+    x-bypass: true # 커스텀 확장 속성으로 bypass 표시
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            description: Any valid request body (passed through as-is)
+    responses:
+      "200":
+        description: Successful response (forwarded from backend)
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Response forwarded from backend service
+      "4XX":
+        description: Error response (forwarded from backend)
+      "5XX":
+        description: Server error (forwarded from backend)

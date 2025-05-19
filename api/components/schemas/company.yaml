@@ -1,4 +1,4 @@
-UserBase:
+CompanyBase:
   type: object
   properties:
     name:
@@ -8,24 +8,17 @@ UserBase:
       type: string
       format: email
       example: alice@example.com
-    role:
-      type: string
-      example: user
     phonenumber:
       type: string
       pattern: '^010\d{7}$'
       example: 01012345678
-    companyId:
-      type: integer
-      example: 101
   required:
     - name
     - email
-    - role
 
-User:
+Company:
   allOf:
-    - $ref: "#/UserBase"
+    - $ref: "#/CompanyBase"
     - type: object
       properties:
         id:
@@ -34,7 +27,7 @@ User:
       required:
         - id
 
-UserListResponse:
+CompanyListResponse:
   allOf:
     - $ref: "../schemas/common.yaml#/APIResponse"
     - type: object
@@ -45,45 +38,38 @@ UserListResponse:
             lists:
               type: array
               items:
-                $ref: "#/User"
+                $ref: "#/Company"
           required:
             - lists
 
-UserGetResponse:
+CompanyGetResponse:
   allOf:
     - $ref: "../schemas/common.yaml#/APIResponse"
     - type: object
       properties:
         data:
-          $ref: "#/User"
+          $ref: "#/Company"
 
-UserCreateRequest:
+CompanyCreateRequest:
   allOf:
-    - $ref: "#/UserBase"
-    - type: object
-      properties:
-        password:
-          type: string
-          format: password
-      required:
-        - password
+    - $ref: "#/CompanyBase"
 
-UserCreateResponse:
+CompanyCreateResponse:
   allOf:
     - $ref: "../schemas/common.yaml#/APIResponse"
     - type: object
       properties:
         data:
-          $ref: "#/User"
+          $ref: "#/Company"
 
-UserUpdateRequest:
+CompanyUpdateRequest:
   allOf:
-    - $ref: "#/UserBase"
+    - $ref: "#/CompanyBase"
 
-UserUpdateResponse:
+CompanyUpdateResponse:
   allOf:
     - $ref: "../schemas/common.yaml#/APIResponse"
     - type: object
       properties:
         data:
-          $ref: "#/User"
+          $ref: "#/Company"

@@ -1,0 +1,20 @@
+APIKeyCreateRequest:
+  type: object
+  properties:
+    userID:
+      type: integer # 오류 1: 'type'과 'integer' 사이에 콜론이 필요하고, '-' 대신 콜론 사용
+  required:
+    - userID
+
+APIKeyCreateResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          type: object
+          properties:
+            key:
+              type: string # 오류 2: 'type'과 'string' 사이에 콜론이 필요
+          required:
+            - key

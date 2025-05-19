@@ -1,0 +1,42 @@
+api-key:
+  delete:
+    x-ogen-operation-group: APIKey
+    tags:
+      - APIKey
+    summary: Delete a specific user
+    operationId: deleteAPIKey
+    parameters:
+      - name: key
+        in: path
+        required: true
+        description: key of the api-key to delete
+        schema:
+          type: string
+    security:
+      - bearerAuth: ["apikey:delete"]
+    responses:
+      "204":
+        description: APIKey deleted successfully
+
+api-keys:
+  post:
+    x-ogen-operation-group: APIKey
+    tags:
+      - APIKey
+    summary: Create user
+    operationId: createAPIKey
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/api-key.yaml#/APIKeyCreateRequest"
+    security:
+      - bearerAuth: ["apikey:create"]
+    responses:
+      "201":
+        description: APIKey created
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/api-key.yaml#/APIKeyCreateResponse"

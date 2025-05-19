@@ -9,8 +9,8 @@ servers:
   - $ref: "./servers.yaml#/development"
 
 # 보안 정의 참조
-security:
-  - bearerAuth: []
+#security:
+#  - bearerAuth: []
 
 # 경로 참조
 paths:
@@ -18,10 +18,20 @@ paths:
     $ref: "./paths/auth.yaml#/login"
   /auth/logout:
     $ref: "./paths/auth.yaml#/logout"
+  /api-keys:
+    $ref: "./paths/api-keys.yaml#/api-keys"
+  /api-keys/{key}:
+    $ref: "./paths/api-keys.yaml#/api-key"
+  /chat/completions:
+    $ref: "./paths/chat.yaml#/completions"
   /users/{id}:
     $ref: "./paths/users.yaml#/user"
   /users:
     $ref: "./paths/users.yaml#/users"
+  /companies/{id}:
+    $ref: "./paths/companies.yaml#/company"
+  /companies:
+    $ref: "./paths/companies.yaml#/companies"
 
 # 공통 컴포넌트
 components:
@@ -58,3 +68,20 @@ components:
       $ref: "./components/schemas/user.yaml#/UserUpdateRequest"
     UserUpdateResponse:
       $ref: "./components/schemas/user.yaml#/UserUpdateResponse"
+
+    CompanyBase:
+      $ref: "./components/schemas/company.yaml#/CompanyBase"
+    Company:
+      $ref: "./components/schemas/company.yaml#/Company"
+    CompanyListResponse:
+      $ref: "./components/schemas/company.yaml#/CompanyListResponse"
+    CompanyGetResponse:
+      $ref: "./components/schemas/company.yaml#/CompanyGetResponse"
+    CompanyCreateRequest:
+      $ref: "./components/schemas/company.yaml#/CompanyCreateRequest"
+    CompanyCreateResponse:
+      $ref: "./components/schemas/company.yaml#/CompanyCreateResponse"
+    CompanyUpdateRequest:
+      $ref: "./components/schemas/company.yaml#/CompanyUpdateRequest"
+    CompanyUpdateResponse:
+      $ref: "./components/schemas/company.yaml#/CompanyUpdateResponse"
