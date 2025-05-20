@@ -3,14 +3,14 @@ SASTokenData:
   properties:
     sasToken:
       type: string
-      description: 생성된 SAS 토큰
+      description: Generated SAS token
     url:
       type: string
-      description: 토큰이 포함된 완전한 접근 URL
+      description: Complete access URL with the token included
     expiryTime:
       type: string
       format: date-time
-      description: 토큰 만료 시간
+      description: Token expiration time
   required:
     - sasToken
     - url
@@ -21,13 +21,13 @@ AzureStorageCreateSASTokenRequest:
   properties:
     containerName:
       type: string
-      description: Azure Storage 컨테이너 이름
+      description: Azure Storage container name
     blobName:
       type: string
-      description: (선택사항) 특정 Blob 이름
+      description: (Optional) Specific blob name
     expiryHours:
       type: integer
-      description: (선택사항) 토큰 만료 시간(시간 단위)
+      description: (Optional) Token expiration time (in hours)
   required:
     - containerName
 
