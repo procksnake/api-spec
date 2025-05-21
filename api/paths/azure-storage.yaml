@@ -1,7 +1,7 @@
 sas-token:
   post:
     summary: Create SAS Token
-    description: Azure Blob Storage에 대한 임시 SAS 토큰을 생성합니다
+    description: Generates a temporary SAS token for Azure Blob Storage
     operationId: createSASToken
     tags:
       - AzureStorage
@@ -13,14 +13,14 @@ sas-token:
             $ref: "../components/schemas/azure-storage.yaml#/AzureStorageCreateSASTokenRequest"
     responses:
       "200":
-        description: 성공적으로 SAS 토큰 생성
+        description: Successfully generated SAS token
         content:
           application/json:
             schema:
               $ref: "../components/schemas/azure-storage.yaml#/AzureStorageCreateSASTokenResponse"
       "400":
-        description: 잘못된 요청 파라미터
+        description: Invalid request parameter
       "401":
-        description: 인증 실패
+        description: Authentication failed
       "500":
-        description: 서버 오류
+        description: Server error
