@@ -1,0 +1,38 @@
+EventGridEvent:
+  type: object
+  required:
+    - id
+    - topic
+    - subject
+    - eventType
+    - eventTime
+    - data
+    - dataVersion
+    - metadataVersion
+  properties:
+    id:
+      type: string
+      description: The unique identifier for the event
+    topic:
+      type: string
+      description: The resource path of the event source
+    subject:
+      type: string
+      description: The subject of the event
+    eventType:
+      type: string
+      description: The type of the event (e.g. 'Microsoft.Search.IndexerCompleted')
+    eventTime:
+      type: string
+      format: date-time
+      description: The time the event was generated
+    data:
+      type: object
+      additionalProperties: true
+      description: The data specific to the event type
+    dataVersion:
+      type: string
+      description: The version of the data schema
+    metadataVersion:
+      type: string
+      description: The version of the event metadata schema

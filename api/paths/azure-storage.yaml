@@ -10,17 +10,17 @@ sas-token:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/azure-storage.yaml#/AzureStorageCreateSASTokenRequest'
+            $ref: "../components/schemas/azure-storage.yaml#/AzureStorageCreateSASTokenRequest"
     responses:
-      '200':
+      "200":
         description: 성공적으로 SAS 토큰 생성
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/azure-storage.yaml#/AzureStorageCreateSASTokenResponse'
-      '400':
+              $ref: "../components/schemas/azure-storage.yaml#/AzureStorageCreateSASTokenResponse"
+      "400":
         description: 잘못된 요청 파라미터
-      '401':
+      "401":
         description: 인증 실패
-      '500':
+      "500":
         description: 서버 오류

@@ -5,8 +5,8 @@ info:
 
 # 서버 정보 참조
 servers:
-  - $ref: './servers.yaml#/production'
-  - $ref: './servers.yaml#/development'
+  - $ref: "./servers.yaml#/production"
+  - $ref: "./servers.yaml#/development"
 
 # 보안 정의 참조
 #security:
@@ -15,75 +15,77 @@ servers:
 # 경로 참조
 paths:
   /auth/login:
-    $ref: './paths/auth.yaml#/login'
+    $ref: "./paths/auth.yaml#/login"
   /auth/logout:
-    $ref: './paths/auth.yaml#/logout'
+    $ref: "./paths/auth.yaml#/logout"
   /api-keys:
-    $ref: './paths/api-keys.yaml#/api-keys'
+    $ref: "./paths/api-keys.yaml#/api-keys"
   /api-keys/{key}:
-    $ref: './paths/api-keys.yaml#/api-key'
+    $ref: "./paths/api-keys.yaml#/api-key"
+  /azure-event-grid:
+    $ref: "./paths/azure-event-grid.yaml#/azure-event-grid"
   /azure-stroage/sas-token:
-    $ref: './paths/azure-storage.yaml#/sas-token'
+    $ref: "./paths/azure-storage.yaml#/sas-token"
   /chat/completions:
-    $ref: './paths/chat.yaml#/completions'
+    $ref: "./paths/chat.yaml#/completions"
   /companies/{id}:
-    $ref: './paths/companies.yaml#/company'
+    $ref: "./paths/companies.yaml#/company"
   /companies:
-    $ref: './paths/companies.yaml#/companies'
+    $ref: "./paths/companies.yaml#/companies"
   /users/{id}:
-    $ref: './paths/users.yaml#/user'
+    $ref: "./paths/users.yaml#/user"
   /users:
-    $ref: './paths/users.yaml#/users'
+    $ref: "./paths/users.yaml#/users"
 
 # 공통 컴포넌트
 components:
   securitySchemes:
     bearerAuth:
-      $ref: './components/security.yaml#/bearerAuth'
+      $ref: "./components/security.yaml#/bearerAuth"
   schemas:
     # 공통 스키마 참조
     APIResponse:
-      $ref: './components/schemas/common.yaml#/APIResponse'
+      $ref: "./components/schemas/common.yaml#/APIResponse"
 
     # 인증 관련 스키마 참조
     AuthLoginRequest:
-      $ref: './components/schemas/auth.yaml#/AuthLoginRequest'
+      $ref: "./components/schemas/auth.yaml#/AuthLoginRequest"
     AuthLoginResponse:
-      $ref: './components/schemas/auth.yaml#/AuthLoginResponse'
+      $ref: "./components/schemas/auth.yaml#/AuthLoginResponse"
     LoginData:
-      $ref: './components/schemas/auth.yaml#/LoginData'
+      $ref: "./components/schemas/auth.yaml#/LoginData"
 
     # 사용자 관련 스키마 참조
     UserBase:
-      $ref: './components/schemas/user.yaml#/UserBase'
+      $ref: "./components/schemas/user.yaml#/UserBase"
     User:
-      $ref: './components/schemas/user.yaml#/User'
+      $ref: "./components/schemas/user.yaml#/User"
     UserListResponse:
-      $ref: './components/schemas/user.yaml#/UserListResponse'
+      $ref: "./components/schemas/user.yaml#/UserListResponse"
     UserGetResponse:
-      $ref: './components/schemas/user.yaml#/UserGetResponse'
+      $ref: "./components/schemas/user.yaml#/UserGetResponse"
     UserCreateRequest:
-      $ref: './components/schemas/user.yaml#/UserCreateRequest'
+      $ref: "./components/schemas/user.yaml#/UserCreateRequest"
     UserCreateResponse:
-      $ref: './components/schemas/user.yaml#/UserCreateResponse'
+      $ref: "./components/schemas/user.yaml#/UserCreateResponse"
     UserUpdateRequest:
-      $ref: './components/schemas/user.yaml#/UserUpdateRequest'
+      $ref: "./components/schemas/user.yaml#/UserUpdateRequest"
     UserUpdateResponse:
-      $ref: './components/schemas/user.yaml#/UserUpdateResponse'
+      $ref: "./components/schemas/user.yaml#/UserUpdateResponse"
 
     CompanyBase:
-      $ref: './components/schemas/company.yaml#/CompanyBase'
+      $ref: "./components/schemas/company.yaml#/CompanyBase"
     Company:
-      $ref: './components/schemas/company.yaml#/Company'
+      $ref: "./components/schemas/company.yaml#/Company"
     CompanyListResponse:
-      $ref: './components/schemas/company.yaml#/CompanyListResponse'
+      $ref: "./components/schemas/company.yaml#/CompanyListResponse"
     CompanyGetResponse:
-      $ref: './components/schemas/company.yaml#/CompanyGetResponse'
+      $ref: "./components/schemas/company.yaml#/CompanyGetResponse"
     CompanyCreateRequest:
-      $ref: './components/schemas/company.yaml#/CompanyCreateRequest'
+      $ref: "./components/schemas/company.yaml#/CompanyCreateRequest"
     CompanyCreateResponse:
-      $ref: './components/schemas/company.yaml#/CompanyCreateResponse'
+      $ref: "./components/schemas/company.yaml#/CompanyCreateResponse"
     CompanyUpdateRequest:
-      $ref: './components/schemas/company.yaml#/CompanyUpdateRequest'
+      $ref: "./components/schemas/company.yaml#/CompanyUpdateRequest"
     CompanyUpdateResponse:
-      $ref: './components/schemas/company.yaml#/CompanyUpdateResponse'
+      $ref: "./components/schemas/company.yaml#/CompanyUpdateResponse"

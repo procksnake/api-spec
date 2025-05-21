@@ -1,0 +1,16 @@
+azure-event-grid:
+  post:
+    summary: event receiver from azure grid
+    operationId: handleEventGrid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../components/schemas/event-grid-event.yaml#/EventGridEvent"
+
+  options:
+    summary: event receiver from azure grid
+    operationId: handleEventGridOptions
