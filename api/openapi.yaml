@@ -43,6 +43,27 @@ components:
     bearerAuth:
       $ref: "./components/security.yaml#/bearerAuth"
   schemas:
+    ErrorCode:
+      type: string
+      enum:
+        - auth.token.missing
+        - auth.token.expired
+        - auth.token.invalid_issuer
+        - auth.token.invalid
+        - auth.token.invalid_audience
+        - internal.unknown
+        - validation.required_field
+        - validation.invalid_format
+      x-enum-varnames:
+        - ErrTokenMissing
+        - ErrTokenExpired
+        - ErrTokenInvalid
+        - ErrTokenInvalidIssuer
+        - ErrTokenInvalidAudience
+        - ErrInternalUnknown
+        - ErrValidationRequired
+        - ErrValidationFormat
+
     # 공통 스키마 참조
     APIResponse:
       $ref: "./components/schemas/common.yaml#/APIResponse"

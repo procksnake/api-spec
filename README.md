@@ -14,3 +14,5 @@ export PATH="$HOME/go/bin:$PATH"
 sudo npm install -g @redocly/cli
 
 go install github.com/ogen-go/ogen/cmd/ogen@latest
+
+pip install pyyaml

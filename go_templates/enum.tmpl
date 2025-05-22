@@ -1,0 +1,11 @@
+// Code generated; DO NOT EDIT.
+
+package {{.Package}}
+
+type ErrorCode string
+
+const (
+{{- range $i, $v := .Components.Schemas.ErrorCode.Enum }}
+  {{index $.Components.Schemas.ErrorCode.XEnumVarNames $i}} ErrorCode = "{{$v}}"
+{{- end }}
+)
