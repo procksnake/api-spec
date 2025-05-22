@@ -10,14 +10,14 @@ login:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/auth.yaml#/AuthLoginRequest'
+            $ref: "../components/schemas/auth.yaml#/AuthLoginRequest"
     responses:
-      '200':
+      "200":
         description: Login success response
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/auth.yaml#/AuthLoginResponse'
+              $ref: "../components/schemas/auth.yaml#/AuthLoginResponse"
 
 logout:
   post:
@@ -29,28 +29,26 @@ logout:
     security:
       - bearerAuth: []
     responses:
-      '200':
+      "200":
         description: Logout success
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/common.yaml#/APIResponse'
+              $ref: "../components/schemas/common.yaml#/APIResponse"
 
-auth/refresh:
+refresh:
   post:
     summary: Reissue access token
+    operationId: refresh
     requestBody:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              refreshToken:
-                type: string
+            $ref: "../components/schemas/auth.yaml#/AuthRefreshRequest"
     responses:
-      '200':
+      "200":
         description: Tokens issued
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/auth.yaml#/AuthRefreshResponse'
+              $ref: "../components/schemas/auth.yaml#/AuthRefreshResponse"
