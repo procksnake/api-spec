@@ -11,19 +11,32 @@ AuthLoginRequest:
 
 AuthLoginResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/LoginData"
+          $ref: '#/LoginData'
+
+AuthRefreshResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/LoginData'
 
 LoginData:
   type: object
   required:
-    - token
+    - accessToken
+    - refreshToken
     - user
   properties:
-    token:
+    accessToken:
       type: string
+      description: JWT access token (short-lived)
+    refreshToken:
+      type: string
+      description: JWT refresh token (long-lived, used to get new access tokens)
     user:
-      $ref: "../schemas/user.yaml#/User"
+      $ref: '../schemas/user.yaml#/User'
