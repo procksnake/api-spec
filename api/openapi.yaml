@@ -34,6 +34,12 @@ paths:
     $ref: "./paths/companies.yaml#/company"
   /companies:
     $ref: "./paths/companies.yaml#/companies"
+  /rag/query:
+    $ref: "./paths/rag.yaml#/query"
+  /rag/sessions/{id}:
+    $ref: "./paths/rag.yaml#/session"
+  /rag/sessions:
+    $ref: "./paths/rag.yaml#/sessions"
   /users/{id}:
     $ref: "./paths/users.yaml#/user"
   /users:
@@ -48,21 +54,49 @@ components:
     ErrorCode:
       type: string
       enum:
-        - auth.token.missing
-        - auth.token.expired
-        - auth.token.invalid_issuer
-        - auth.token.invalid
-        - auth.token.invalid_audience
+        - auth.access_token.missing
+        - auth.access_token.expired
+        - auth.access_token.invalid
+        - auth.access_token.invalid_issuer
+        - auth.access_token.invalid_issuer
+        - auth.api_key.invalid
+        - auth.invalid_credential
+        - database.not_found
+        - database.conflict
+        - database.invalid_foreign_key
+        - database.too_long_input
+        - database.invalid_input_type
+        - database.invalid_input_value
+        - database.invalid_permission
+        - database.internal
         - internal.unknown
+        - request.body_read_failed
+        - request.canceled
+        - request.timeout
+        - request.internal
         - validation.required_field
         - validation.invalid_format
       x-enum-varnames:
-        - ErrTokenMissing
-        - ErrTokenExpired
-        - ErrTokenInvalid
-        - ErrTokenInvalidIssuer
-        - ErrTokenInvalidAudience
+        - ErrAuthAccessTokenMissing
+        - ErrAuthAccessTokenExpired
+        - ErrAuthAccessTokenInvalid
+        - ErrAuthAccessTokenInvalidIssuer
+        - ErrAuthAccessTokenInvalidAudience
+        - ErrAuthAPIKeyInvalid
+        - ErrAuthInvalidCredential
+        - ErrDatabaseNotFound
+        - ErrDatabaseConflict
+        - ErrDatabaseInvalidForeignKey
+        - ErrDatabaseTooLongInput
+        - ErrDatabaseInvalidInputType
+        - ErrDatabaseInvalidInputValue
+        - ErrDatabaseInvalidPermission
+        - ErrDatabaseInternal
         - ErrInternalUnknown
+        - ErrRequestBodyReadFailed
+        - ErrRequestCanceled
+        - ErrRequestTimeout
+        - ErrRequestInternal
         - ErrValidationRequired
         - ErrValidationFormat
 

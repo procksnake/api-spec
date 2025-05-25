@@ -12,6 +12,7 @@ user:
         description: ID of the user to retrieve
         schema:
           type: integer
+          format: uint64
     responses:
       "200":
         description: Successfully retrieved user
@@ -35,6 +36,7 @@ user:
         description: ID of the user to update
         schema:
           type: integer
+          format: uint64
     requestBody:
       required: true
       content:
@@ -62,6 +64,7 @@ user:
         description: ID of the user to delete
         schema:
           type: integer
+          format: uint64
     responses:
       "204":
         description: User deleted successfully

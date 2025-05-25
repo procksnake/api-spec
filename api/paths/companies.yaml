@@ -12,6 +12,7 @@ company:
         description: ID of the company to retrieve
         schema:
           type: integer
+          format: uint64
     responses:
       "200":
         description: Successfully retrieved company
@@ -35,6 +36,7 @@ company:
         description: ID of the company to update
         schema:
           type: integer
+          format: uint64
     requestBody:
       required: true
       content:
@@ -62,6 +64,7 @@ company:
         description: ID of the company to delete
         schema:
           type: integer
+          format: uint64
     responses:
       "204":
         description: Company deleted successfully

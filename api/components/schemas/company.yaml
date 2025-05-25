@@ -23,6 +23,7 @@ Company:
       properties:
         id:
           type: integer
+          format: uint64
           example: 1
       required:
         - id
@@ -33,14 +34,7 @@ CompanyListResponse:
     - type: object
       properties:
         data:
-          type: object
-          properties:
-            lists:
-              type: array
-              items:
-                $ref: "#/Company"
-          required:
-            - lists
+          $ref: "#/CompanyListData"
 
 CompanyGetResponse:
   allOf:
@@ -73,3 +67,18 @@ CompanyUpdateResponse:
       properties:
         data:
           $ref: "#/Company"
+
+CompanyListData:
+  type: object
+  required:
+    - companies
+    - pagination
+  properties:
+    companies:
+      type: array
+      items:
+        $ref: "#/Company"
+      description: List of companies
+    pagination:
+      $ref: "../schemas/common.yaml#/Pagination"
+      description: Pagination information

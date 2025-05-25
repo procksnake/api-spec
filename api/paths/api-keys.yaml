@@ -13,9 +13,9 @@ api-key:
         schema:
           type: string
     security:
-      - bearerAuth: ['apikey:delete']
+      - bearerAuth: ["apikey:delete"]
     responses:
-      '204':
+      "204":
         description: APIKey deleted successfully
 
 api-keys:
@@ -30,13 +30,13 @@ api-keys:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/api-key.yaml#/APIKeyCreateRequest'
+            $ref: "../components/schemas/api-key.yaml#/APIKeyCreateRequest"
     security:
-      - bearerAuth: ['apikey:create']
+      - bearerAuth: ["apikey:create"]
     responses:
-      '201':
+      "201":
         description: APIKey created
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/api-key.yaml#/APIKeyCreateResponse'
+              $ref: "../components/schemas/api-key.yaml#/APIKeyCreateResponse"

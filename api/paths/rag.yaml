@@ -2,15 +2,15 @@ query:
   post:
     tags:
       - Rag
-    summary: RAG 기반 질의 처리
+    summary: RAG-based query processing
     description: |
-      사용자 질의를 받아 다음 과정을 거쳐 응답을 생성합니다:
-      1. 질의 벡터화
-      2. Hybrid search (키워드 + 벡터 검색)
-      3. 세션 내 유사 질의 검색
-      4. 컨텍스트 기반 프롬프트 생성
-      5. LLM 응답 생성
-    operationId: ragQuery
+      Processes user queries through the following steps:
+      1. Query vectorization
+      2. Hybrid search (keyword + vector search)
+      3. Similar query search within session
+      4. Context-based prompt generation
+      5. LLM response generation
+    operationId: queryRag
     requestBody:
       required: true
       content:
@@ -19,68 +19,68 @@ query:
             $ref: "../components/schemas/rag.yaml#/RagQueryRequest"
           examples:
             simple_query:
-              summary: 간단한 질의
+              summary: Simple query
               value:
-                query: "파이썬에서 리스트 컴프리헨션이 뭔가요?"
-                session_id: "sess_123456789"
+                query: "What is list comprehension in Python?"
+                sessionId: "sess_123456789"
             complex_query:
-              summary: 복잡한 질의
+              summary: Complex query
               value:
-                query: "머신러닝 모델의 과적합을 방지하는 방법들을 자세히 설명해주세요"
-                session_id: "sess_987654321"
+                query: "Please explain in detail the methods to prevent overfitting in machine learning models"
+                sessionId: "sess_987654321"
                 options:
-                  similarity_threshold: 0.8
-                  max_similar_queries: 5
-                  include_metadata: true
+                  similarityThreshold: 0.8
+                  maxSimilarQueries: 5
+                  includeMetadata: true
     responses:
       "200":
-        description: 성공적으로 처리된 응답
+        description: Successfully processed response
         content:
           application/json:
             schema:
               $ref: "../components/schemas/rag.yaml#/RagQueryResponse"
             examples:
               success_response:
-                summary: 성공 응답
+                summary: Success response
                 value:
-                  query_id: "query_abc123"
-                  session_id: "sess_123456789"
-                  response: "리스트 컴프리헨션은 파이썬에서 리스트를 간결하게 생성하는 방법입니다..."
+                  queryId: "query_abc123"
+                  sessionId: "sess_123456789"
+                  response: "List comprehension is a concise way to create lists in Python..."
                   sources:
-                    - source_id: "doc_001"
-                      title: "Python 기초 문법"
-                      relevance_score: 0.95
-                      excerpt: "리스트 컴프리헨션의 기본 구조는..."
-                  similar_queries:
-                    - query: "파이썬 리스트 생성 방법"
-                      similarity_score: 0.87
-                      query_id: "query_xyz789"
+                    - sourceId: "doc_001"
+                      title: "Python Basic Syntax"
+                      relevanceScore: 0.95
+                      excerpt: "The basic structure of list comprehension is..."
+                  similarQueries:
+                    - query: "How to create lists in Python"
+                      similarityScore: 0.87
+                      queryId: "query_xyz789"
                   metadata:
-                    processing_time_ms: 1250
-                    vector_search_time_ms: 200
-                    llm_response_time_ms: 800
-                    similarity_check_time_ms: 50
+                    processingTimeMs: 1250
+                    vectorSearchTimeMs: 200
+                    llmResponseTimeMs: 800
+                    similarityCheckTimeMs: 50
       "400":
-        description: 잘못된 요청
+        description: Bad request
         content:
           application/json:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
             examples:
               invalid_query:
-                summary: 빈 질의
+                summary: Empty query
                 value:
-                  error_code: "INVALID_QUERY"
-                  message: "질의가 비어있거나 너무 짧습니다"
-                  details: "질의는 최소 2자 이상이어야 합니다"
+                  errorCode: "INVALID_QUERY"
+                  message: "Query is empty or too short"
+                  details: "Query must be at least 2 characters long"
       "429":
-        description: 요청 한도 초과
+        description: Rate limit exceeded
         content:
           application/json:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
       "500":
-        description: 서버 내부 오류
+        description: Internal server error
         content:
           application/json:
             schema:
@@ -143,16 +143,17 @@ session:
     x-ogen-operation-group: Rag
     tags:
       - Rag
-    summary: 세션 정보 조회
-    description: 특정 세션의 질의 히스토리 조회
+    summary: Get session information
+    description: Retrieve query history for a specific session
     operationId: getRagSession
     parameters:
-      - name: session_id
+      - name: id
         in: path
         required: true
         schema:
-          type: string
-        description: 세션 ID
+          type: integer
+          format: uint64
+        description: Session ID
       - name: limit
         in: query
         schema:
@@ -160,47 +161,49 @@ session:
           minimum: 1
           maximum: 100
           default: 20
-        description: 반환할 질의 개수
+        description: Number of queries to return
       - name: offset
         in: query
         schema:
           type: integer
           minimum: 0
           default: 0
-        description: 건너뛸 질의 개수
+        description: Number of queries to skip
     responses:
       "200":
-        description: 세션 정보
+        description: Session information
         content:
           application/json:
             schema:
               $ref: "../components/schemas/rag.yaml#/RagSessionGetResponse"
       "404":
-        description: 세션을 찾을 수 없음
+        description: Session not found
         content:
           application/json:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
   delete:
+    x-ogen-operation-group: Rag
     tags:
-      - Session
-    summary: 세션 삭제
-    description: 세션과 관련된 모든 데이터 삭제
-    operationId: deleteSession
+      - Rag
+    summary: Delete session
+    description: Delete session and all related data
+    operationId: deleteRagSession
     parameters:
-      - name: session_id
+      - name: id
         in: path
         required: true
         schema:
-          type: string
-        description: 삭제할 세션 ID
+          type: integer
+          format: uint64
+        description: Session ID to delete
     responses:
       "204":
-        description: 성공적으로 삭제됨
+        description: Successfully deleted
       "404":
-        description: 세션을 찾을 수 없음
+        description: Session not found
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ErrorResponse"
+              $ref: "../components/schemas/common.yaml#/APIResponse"

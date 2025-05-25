@@ -3,12 +3,13 @@ APIKeyCreateRequest:
   properties:
     userID:
       type: integer # 오류 1: 'type'과 'integer' 사이에 콜론이 필요하고, '-' 대신 콜론 사용
+      format: uint64 # 오류 1: 'type'과 'integer' 사이에 콜론이 필요하고, '-' 대신 콜론 사용
   required:
     - userID
 
 APIKeyCreateResponse:
   allOf:
-    - $ref: '../schemas/common.yaml#/APIResponse'
+    - $ref: "../schemas/common.yaml#/APIResponse"
     - type: object
       properties:
         data:
