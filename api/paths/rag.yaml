@@ -22,7 +22,7 @@ query:
               summary: Simple query
               value:
                 query: "What is list comprehension in Python?"
-                sessionId: "sess_123456789"
+                sessionId: 1
             complex_query:
               summary: Complex query
               value:

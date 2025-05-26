@@ -11,12 +11,10 @@ RagQueryRequest:
       description: User query
       example: "What is list comprehension in Python?"
     sessionId:
-      type: string
+      type: integer
+      format: uint64
       pattern: "^[a-zA-Z0-9_-]+$"
-      minLength: 1
-      maxLength: 100
       description: Session identifier
-      example: "sess_123456789"
     options:
       type: object
       description: Optional settings
@@ -63,9 +61,9 @@ RagQueryData:
       description: Unique query identifier
       example: "query_abc123"
     sessionId:
-      type: string
+      type: integer
+      format: uint64
       description: Session identifier
-      example: "sess_123456789"
     response:
       type: string
       description: LLM generated response
