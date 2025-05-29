@@ -13,11 +13,10 @@ RagQueryRequest:
     sessionId:
       type: integer
       format: uint64
-      pattern: '^[a-zA-Z0-9_-]+$'
       description: Session identifier
-    options:
+    searchOptions:
       type: object
-      description: Optional settings
+      description: Search/retrieval settings
       properties:
         similarityThreshold:
           type: number
@@ -25,21 +24,46 @@ RagQueryRequest:
           maximum: 1.0
           default: 0.7
           description: Similar query threshold
-        maxSimilarQueries:
-          type: integer
+        vectorWeight:
+          type: number
           minimum: 0
+          maximum: 1
+          default: 0.5
+          description: |
+            Weight for vector/semantic search vs keyword search
+            0.0 = pure semantic search
+            1.0 = pure keyword search  
+            0.5 = balanced hybrid
+        topK:
+          type: integer
+          minimum: 1
           maximum: 10
           default: 3
-          description: Maximum number of similar queries to include
-        includeMetadata:
+          description: Maximum number of results to return
+    generationOptions:
+      type: object
+      description: Response generation settings
+      properties:
+        temperature:
+          type: number
+          minimum: 0.0
+          maximum: 2.0
+          default: 1.0
+          description: Response creativity/randomness
+        maxTokens:
+          type: integer
+          minimum: 1
+          maximum: 8192
+          default: 2048
+          description: Maximum response length
+        includeReferences:
           type: boolean
-          default: false
-          description: Whether to include processing metadata
-        searchMode:
+          default: true
+          description: Include source references in response
+        systemMessage:
           type: string
-          enum: [hybrid, semantic, keyword]
-          default: hybrid
-          description: Search mode
+          default: 'You are a helpful assistant. Answer based on the provided context.'
+          description: System message to guide response style and behavior
 
 RagQueryResponse:
   allOf:
