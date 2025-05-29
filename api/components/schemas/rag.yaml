@@ -9,11 +9,11 @@ RagQueryRequest:
       minLength: 2
       maxLength: 2000
       description: User query
-      example: "What is list comprehension in Python?"
+      example: 'What is list comprehension in Python?'
     sessionId:
       type: integer
       format: uint64
-      pattern: "^[a-zA-Z0-9_-]+$"
+      pattern: '^[a-zA-Z0-9_-]+$'
       description: Session identifier
     options:
       type: object
@@ -43,11 +43,11 @@ RagQueryRequest:
 
 RagQueryResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/RagQueryData"
+          $ref: '#/RagQueryData'
 
 RagQueryData:
   type: object
@@ -59,7 +59,7 @@ RagQueryData:
     queryId:
       type: string
       description: Unique query identifier
-      example: "query_abc123"
+      example: 'query_abc123'
     sessionId:
       type: integer
       format: uint64
@@ -67,19 +67,19 @@ RagQueryData:
     response:
       type: string
       description: LLM generated response
-      example: "List comprehension is a concise way to create lists in Python..."
+      example: 'List comprehension is a concise way to create lists in Python...'
     sources:
       type: array
       description: Referenced documents
       items:
-        $ref: "#/RagQuerySource"
+        $ref: '#/RagQuerySource'
     similarQueries:
       type: array
       description: Similar previous queries
       items:
-        $ref: "#/RagSimilarQuery"
+        $ref: '#/RagSimilarQuery'
     metadata:
-      $ref: "#/RagResponseMetadata"
+      $ref: '#/RagResponseMetadata'
 
 RagQuerySource:
   type: object
@@ -185,85 +185,85 @@ RagSessionCreateRequest:
       minLength: 1
       maxLength: 100
       description: Session name
-      example: "Python Learning Session"
+      example: 'Python Learning Session'
     description:
       type: string
       maxLength: 500
       description: Session description
-      example: "Session for learning Python programming concepts"
+      example: 'Session for learning Python programming concepts'
     tags:
       type: array
       items:
         type: string
       description: Session tags
-      example: ["python", "programming", "learning"]
+      example: ['python', 'programming', 'learning']
 
 RagSessionCreateResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/RagSession"
+          $ref: '#/RagSession'
 
 RagSessionListResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/RagSessionListData"
+          $ref: '#/RagSessionListData'
 
 RagSessionGetResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/RagSessionData"
+          $ref: '#/RagSessionData'
 
 RagSessionBase:
   type: object
   required:
-    - Id
+    - id
     - createdAt
   properties:
-    Id:
+    id:
       type: integer
       format: uint64
       description: Session identifier
     name:
       type: string
       description: Session name
-      example: "Python Learning Session"
+      example: 'Python Learning Session'
     description:
       type: string
       description: Session description
-      example: "Session for learning Python programming concepts"
+      example: 'Session for learning Python programming concepts'
     createdAt:
       type: string
       format: date-time
       description: Session creation timestamp
-      example: "2025-05-24T10:30:00Z"
+      example: '2025-05-24T10:30:00Z'
     updatedAt:
       type: string
       format: date-time
       description: Last update timestamp
-      example: "2025-05-24T14:45:30Z"
+      example: '2025-05-24T14:45:30Z'
     tags:
       type: array
       items:
         type: string
       description: Session tags
-      example: ["python", "programming", "learning"]
+      example: ['python', 'programming', 'learning']
 
 RagSession:
   allOf:
-    - $ref: "#/RagSessionBase"
+    - $ref: '#/RagSessionBase'
 
 RagSessionSummary:
   allOf:
-    - $ref: "#/RagSessionBase"
+    - $ref: '#/RagSessionBase'
     - type: object
       required:
         - totalQueries
@@ -276,11 +276,11 @@ RagSessionSummary:
           type: string
           format: date-time
           description: Timestamp of last query
-          example: "2025-05-24T14:45:30Z"
+          example: '2025-05-24T14:45:30Z'
 
 RagSessionData:
   allOf:
-    - $ref: "#/RagSessionBase"
+    - $ref: '#/RagSessionBase'
     - type: object
       required:
         - queries
@@ -294,10 +294,10 @@ RagSessionData:
         queries:
           type: array
           items:
-            $ref: "#/RagQueryHistory"
+            $ref: '#/RagQueryHistory'
           description: List of queries in the session
         pagination:
-          $ref: "../schemas/common.yaml#/Pagination"
+          $ref: '../schemas/common.yaml#/Pagination'
 
 RagSessionListData:
   type: object
@@ -308,8 +308,8 @@ RagSessionListData:
     sessions:
       type: array
       items:
-        $ref: "#/RagSessionSummary"
+        $ref: '#/RagSessionSummary'
       description: List of session summaries
     pagination:
-      $ref: "../schemas/common.yaml#/Pagination"
+      $ref: '../schemas/common.yaml#/Pagination'
       description: Pagination information
