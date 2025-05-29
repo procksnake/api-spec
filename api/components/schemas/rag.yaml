@@ -284,7 +284,6 @@ RagSessionData:
     - type: object
       required:
         - queries
-        - pagination
         - totalQueries
       properties:
         totalQueries:
