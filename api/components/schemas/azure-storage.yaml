@@ -33,11 +33,11 @@ AzureStorageCreateSASTokenRequest:
 
 AzureStorageCreateSASTokenResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/SASTokenData"
+          $ref: '#/SASTokenData'
 
 AzureStorageUploadRequest:
   x-form-model: true
@@ -50,18 +50,20 @@ AzureStorageUploadRequest:
       type: string
       format: binary
       description: File to upload
-      x-go-type: "*multipart.FileHeader"
+      x-go-type: '*multipart.FileHeader'
       x-go-tag: 'json:"file" form:"file"'
     blobName:
       type: string
       description: Name for the blob (file) in storage
-      x-go-tag: 'form:"blobName"'
-      example: "document.pdf"
+      example: 'document.pdf'
+    stroageType:
+      type: string
+      description: Storage type (default one, predefined value in backend)
     contentType:
       type: string
       description: Content type of the file (optional, will be auto-detected)
       x-go-tag: 'form:"contentType"'
-      example: "application/pdf"
+      example: 'application/pdf'
     overwrite:
       type: boolean
       description: Whether to overwrite existing blob
@@ -74,16 +76,16 @@ AzureStorageUploadRequest:
         type: string
       description: Optional metadata key-value pairs
       example:
-        author: "user123"
-        version: "1.0"
+        author: 'user123'
+        version: '1.0'
 
 AzureStorageUploadResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/AzureStorageUploadResult"
+          $ref: '#/AzureStorageUploadResult'
 
 AzureStorageUploadResult:
   type: object
@@ -91,11 +93,11 @@ AzureStorageUploadResult:
     blobName:
       type: string
       description: Name of the uploaded blob
-      example: "document.pdf"
+      example: 'document.pdf'
     url:
       type: string
       description: URL of the uploaded blob
-      example: "https://storage.blob.core.windows.net/container/document.pdf"
+      example: 'https://storage.blob.core.windows.net/container/document.pdf'
     size:
       type: integer
       format: int64
@@ -104,7 +106,7 @@ AzureStorageUploadResult:
     contentType:
       type: string
       description: Content type of the uploaded file
-      example: "application/pdf"
+      example: 'application/pdf'
     lastModified:
       type: string
       format: date-time
