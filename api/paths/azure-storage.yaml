@@ -24,3 +24,51 @@ sas-token:
         description: Authentication failed
       "500":
         description: Server error
+
+containers:
+  blobs:
+    post:
+      tags:
+        - AzureStorage
+      summary: Upload file to Azure Blob Storage
+      description: Upload a file to the specified container in Azure Blob Storage
+      operationId: uploadBlob
+      parameters:
+        - name: containerName
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Azure Blob Storage container name
+          example: "documents"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "../components/schemas/azure-storage.yaml#/AzureStorageUploadRequest"
+      responses:
+        200:
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: "../components/schemas/azure-storage.yaml#/AzureStorageUploadResponse"
+        400:
+          description: Bad request - invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: "../components/schemas/common.yaml#/APIResponse"
+        409:
+          description: Conflict - blob already exists and overwrite is false
+          content:
+            application/json:
+              schema:
+                $ref: "../components/schemas/common.yaml#/APIResponse"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "../components/schemas/common.yaml#/APIResponse"

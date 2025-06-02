@@ -28,6 +28,8 @@ paths:
     $ref: "./paths/azure-event-grid.yaml#/azure-event-grid"
   /azure-stroage/sas-token:
     $ref: "./paths/azure-storage.yaml#/sas-token"
+  /azure-storage/containers/{containerName}/blobs:
+    $ref: "./paths/azure-storage.yaml#/containers/blobs"
   /chat/completions:
     $ref: "./paths/chat.yaml#/completions"
   /companies/{id}:
