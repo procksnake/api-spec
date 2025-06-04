@@ -65,17 +65,4 @@ AuthValidateResponse:
     - type: object
       properties:
         data:
-          $ref: '#/AuthValidateData'
-
-AuthValidateData:
-  type: object
-  required:
-    - valid
-    - user
-  properties:
-    valid:
-      type: boolean
-      description: Whether the token is valid
-      example: true
-    user:
-      $ref: '../schemas/user.yaml#/User'
+          $ref: '#/LoginData'
