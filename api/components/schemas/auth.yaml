@@ -11,11 +11,11 @@ AuthLoginRequest:
 
 AuthLoginResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/LoginData"
+          $ref: '#/LoginData'
 
 AuthRefreshRequest:
   type: object
@@ -27,11 +27,11 @@ AuthRefreshRequest:
 
 AuthRefreshResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/LoginData"
+          $ref: '#/LoginData'
 
 LoginData:
   type: object
@@ -47,4 +47,35 @@ LoginData:
       type: string
       description: JWT refresh token (long-lived, used to get new access tokens)
     user:
-      $ref: "../schemas/user.yaml#/User"
+      $ref: '../schemas/user.yaml#/User'
+
+AuthValidateRequest:
+  type: object
+  required:
+    - token
+  properties:
+    token:
+      type: string
+      description: JWT token to validate
+      example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+
+AuthValidateResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/AuthValidateData'
+
+AuthValidateData:
+  type: object
+  required:
+    - valid
+    - user
+  properties:
+    valid:
+      type: boolean
+      description: Whether the token is valid
+      example: true
+    user:
+      $ref: '../schemas/user.yaml#/User'

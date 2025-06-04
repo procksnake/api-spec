@@ -20,6 +20,8 @@ paths:
     $ref: './paths/auth.yaml#/refresh'
   /auth/logout:
     $ref: './paths/auth.yaml#/logout'
+  /auth/validate:
+    $ref: './paths/auth.yaml#/validate'
   /api-keys:
     $ref: './paths/api-keys.yaml#/api-keys'
   /api-keys/{key}:

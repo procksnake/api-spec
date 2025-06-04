@@ -26,7 +26,7 @@ UserBase:
 
 User:
   allOf:
-    - $ref: "#/UserBase"
+    - $ref: '#/UserBase'
     - type: object
       properties:
         id:
@@ -38,23 +38,23 @@ User:
 
 UserListResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/UserListData"
+          $ref: '#/UserListData'
 
 UserGetResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/User"
+          $ref: '#/User'
 
 UserCreateRequest:
   allOf:
-    - $ref: "#/UserBase"
+    - $ref: '#/UserBase'
     - type: object
       properties:
         password:
@@ -65,23 +65,23 @@ UserCreateRequest:
 
 UserCreateResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/User"
+          $ref: '#/User'
 
 UserUpdateRequest:
   allOf:
-    - $ref: "#/UserBase"
+    - $ref: '#/UserBase'
 
 UserUpdateResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/User"
+          $ref: '#/User'
 
 UserListData:
   type: object
@@ -92,8 +92,8 @@ UserListData:
     companies:
       type: array
       items:
-        $ref: "#/User"
+        $ref: '#/User'
       description: List of users
     pagination:
-      $ref: "../schemas/common.yaml#/Pagination"
+      $ref: '../schemas/common.yaml#/Pagination'
       description: Pagination information
