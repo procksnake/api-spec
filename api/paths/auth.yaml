@@ -59,7 +59,7 @@ validate:
     tags:
       - Auth
     summary: Validate JWT token
-    operationId: validateToken
+    operationId: validate
     requestBody:
       required: true
       content:
