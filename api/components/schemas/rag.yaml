@@ -24,22 +24,16 @@ RagQueryRequest:
           maximum: 1.0
           default: 0.65
           description: Similar query threshold
-        vectorWeight:
-          type: number
-          minimum: 0
-          maximum: 1
-          default: 0.8
-          description: |
-            Weight for vector/semantic search vs keyword search
-            0.0 = pure semantic search
-            1.0 = pure keyword search  
-            0.5 = balanced hybrid
         topK:
           type: integer
           minimum: 1
           maximum: 10
           default: 3
           description: Maximum number of results to return
+        filter:
+          type: string
+          description: OData filter expression (e.g., "status eq 'active' and category eq 'document'")
+          example: "status eq 'active'"
     generationOptions:
       type: object
       description: Response generation settings
