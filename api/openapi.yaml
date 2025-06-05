@@ -32,14 +32,14 @@ paths:
     $ref: "./paths/azure-storage.yaml#/sas-token"
   /azure-storage/containers/{containerName}/blobs:
     $ref: "./paths/azure-storage.yaml#/containers/blobs"
-  /azure-ai-search/indexers:
-    $ref: "./paths/azure-ai-search.yaml#/indexers"
-  /azure-ai-search/indexers/{indexer-name}:
-    $ref: "./paths/azure-ai-search.yaml#/indexer"
-  /azure-ai-search/indexers/{indexer-name}/run:
-    $ref: "./paths/azure-ai-search.yaml#/indexer-run"
-  /azure-ai-search/indexers/{indexer-name}/reset:
-    $ref: "./paths/azure-ai-search.yaml#/indexer-reset"
+  #/azure-ai-search/indexers:
+  #  $ref: "./paths/azure-ai-search.yaml#/indexers"
+  #/azure-ai-search/indexers/{indexer-name}:
+  #  $ref: "./paths/azure-ai-search.yaml#/indexer"
+  #/azure-ai-search/indexers/{indexer-name}/run:
+  #  $ref: "./paths/azure-ai-search.yaml#/indexer-run"
+  #/azure-ai-search/indexers/{indexer-name}/reset:
+  #  $ref: "./paths/azure-ai-search.yaml#/indexer-reset"
   /chat/completions:
     $ref: "./paths/chat.yaml#/completions"
   /companies/{id}:
@@ -48,6 +48,10 @@ paths:
     $ref: "./paths/companies.yaml#/companies"
   /rag/query:
     $ref: "./paths/rag.yaml#/query"
+  /rag/index/{indexName}/update:
+    $ref: "./paths/rag.yaml#/indexUpdate"
+  /rag/index/{indexName}/status:
+    $ref: "./paths/rag.yaml#/indexStatus"
   /rag/sessions/{id}:
     $ref: "./paths/rag.yaml#/session"
   /rag/sessions:

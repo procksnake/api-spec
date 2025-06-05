@@ -336,3 +336,88 @@ RagSessionListData:
     pagination:
       $ref: "../schemas/common.yaml#/Pagination"
       description: Pagination information
+
+RagIndexUpdateResponse:
+  type: object
+  required:
+    - status
+    - message
+    - indexName
+  properties:
+    status:
+      type: string
+      enum: [accepted]
+      description: Status of the update request
+    message:
+      type: string
+      description: Human-readable message
+    indexName:
+      type: string
+      description: Name of the index being updated
+    estimatedDurationMinutes:
+      type: integer
+      description: Estimated time to complete the update
+      example: 15
+
+RagIndexStatusResponse:
+  type: object
+  required:
+    - indexName
+    - status
+  properties:
+    indexName:
+      type: string
+      description: Name of the index
+    status:
+      type: string
+      enum: [idle, running, error]
+      description: Current index status
+    lastExecution:
+      $ref: "#/RagIndexExecutionStatus"
+
+RagIndexExecutionStatus:
+  type: object
+  required:
+    - status
+    - startTime
+    - itemsProcessed
+    - itemsFailed
+    - errorCount
+    - warningCount
+    - isCompleted
+    - isRunning
+  properties:
+    status:
+      type: string
+      enum: [inProgress, success, transientFailure, persistentFailure]
+      description: Execution status
+    startTime:
+      type: string
+      format: date-time
+      description: When the execution started
+    endTime:
+      type: string
+      format: date-time
+      description: When the execution completed
+    itemsProcessed:
+      type: integer
+      description: Number of items successfully processed
+    itemsFailed:
+      type: integer
+      description: Number of items that failed processing
+    duration:
+      type: string
+      description: Human-readable duration
+      example: "15분"
+    errorCount:
+      type: integer
+      description: Total number of errors
+    warningCount:
+      type: integer
+      description: Total number of warnings
+    isCompleted:
+      type: boolean
+      description: Whether the execution is completed
+    isRunning:
+      type: boolean
+      description: Whether the execution is currently running
