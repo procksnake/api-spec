@@ -378,7 +378,7 @@ RagIndexStatusData:
       description: Name of the index
     status:
       type: string
-      enum: [idle, running, error, success]
+      enum: [idle, running, error]
       description: Current index status
     lastExecution:
       $ref: "#/RagIndexExecutionResult"
