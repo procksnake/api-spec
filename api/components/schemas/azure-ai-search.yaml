@@ -1,0 +1,125 @@
+AzureAISearchIndexerListData:
+  type: object
+  required:
+    - indexers
+  properties:
+    indexers:
+      type: array
+      items:
+        $ref: "#/AzureAISearchIndexer"
+      description: List of indexers
+    pagination:
+      $ref: "../schemas/common.yaml#/Pagination"
+      description: Pagination information
+
+AzureAISearchIndexer:
+  type: object
+  properties:
+    name:
+      type: string
+      description: Indexer name
+    status:
+      type: string
+      enum: [running, completed, failed, transientFailure]
+      description: Current indexer status
+    lastResult:
+      $ref: "#/AzureAISearchIndexerExecutionResult"
+
+AzureAISearchIndexerExecutionResult:
+  type: object
+  properties:
+    status:
+      type: string
+      description: Execution result status
+    startTime:
+      type: string
+      format: date-time
+    endTime:
+      type: string
+      format: date-time
+    itemsProcessed:
+      type: integer
+      description: Number of items processed
+    itemsFailed:
+      type: integer
+      description: Number of items failed
+    errors:
+      type: array
+      items:
+        $ref: "#/AzureAISearchIndexerError"
+
+AzureAISearchIndexerError:
+  type: object
+  properties:
+    key:
+      type: string
+      description: Item key that failed
+    errorMessage:
+      type: string
+      description: Error description
+    statusCode:
+      type: integer
+      description: HTTP status code
+    name:
+      type: string
+      description: Error name
+
+AzureAISearchGetIndexerResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/AzureAISearchIndexer"
+
+AzureAISearchListIndexersResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/AzureAISearchIndexerListData"
+
+AzureAISearchRunIndexerRequest:
+  type: object
+  properties:
+    mode:
+      type: string
+      enum: [full, incremental, reset]
+      default: incremental
+      description: Indexer execution mode
+    parameters:
+      type: object
+      properties:
+        maxFailedItems:
+          type: integer
+          minimum: 0
+          description: Maximum number of failed items allowed
+        maxFailedItemsPerBatch:
+          type: integer
+          minimum: 0
+          description: Maximum number of failed items per batch
+        batchSize:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          description: Number of items to process per batch
+
+AzureAISearchRunIndexerResponse:
+  type: object
+  properties:
+    executionId:
+      type: string
+      format: uuid
+      description: Unique identifier for this execution
+    status:
+      type: string
+      enum: [running, completed, failed]
+      description: Current execution status
+    startTime:
+      type: string
+      format: date-time
+      description: Execution start time
+    estimatedDuration:
+      type: integer
+      description: Estimated duration in seconds

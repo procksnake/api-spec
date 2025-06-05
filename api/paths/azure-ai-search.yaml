@@ -1,0 +1,121 @@
+indexers:
+  get:
+    tags:
+      - AzureAISearch
+    summary: List all Azure AI Search indexers
+    description: Retrieve list of all available indexers in Azure AI Search service
+    operationId: listIndexers
+    responses:
+      200:
+        description: List of indexers retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/azure-ai-search.yaml#/AzureAISearchListIndexersResponse"
+      400:
+        description: Bad request - invalid parameters
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+indexer:
+  get:
+    tags:
+      - AzureAISearch
+    summary: Get Azure AI Search indexer status
+    description: Get the current status and execution history of a specific indexer
+    operationId: getIndexer
+    parameters:
+      - name: indexer-name
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Azure AI Search indexer name
+        example: "documents-indexer"
+    responses:
+      200:
+        description: Indexer status retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/azure-ai-search.yaml#/AzureAISearchGetIndexerResponse"
+      404:
+        description: Indexer not found
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+indexer-run:
+  post:
+    tags:
+      - AzureAISearch
+    summary: Execute Azure AI Search indexer
+    description: Start execution of the specified indexer with optional parameters
+    operationId: runIndexer
+    parameters:
+      - name: indexer-name
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Azure AI Search indexer name
+        example: "documents-indexer"
+    requestBody:
+      required: false
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/azure-ai-search.yaml#/AzureAISearchRunIndexerRequest"
+    responses:
+      202:
+        description: Indexer execution started successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/azure-ai-search.yaml#/AzureAISearchRunIndexerResponse"
+      400:
+        description: Bad request - invalid parameters
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      404:
+        description: Indexer not found
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+indexer-reset:
+  post:
+    tags:
+      - AzureAISearch
+    summary: Reset Azure AI Search indexer
+    description: Reset the indexer to clear its execution history and state
+    operationId: resetIndexer
+    parameters:
+      - name: indexer-name
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Azure AI Search indexer name
+        example: "documents-indexer"
+    responses:
+      204:
+        description: Indexer reset successfully
+      400:
+        description: Bad request - invalid parameters
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      404:
+        description: Indexer not found
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
