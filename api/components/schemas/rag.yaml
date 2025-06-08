@@ -18,6 +18,12 @@ RagQueryRequest:
       type: object
       description: Search/retrieval settings
       properties:
+        indexName:
+          type: string
+          description: |
+            Name of the Azure AI Search index to query.
+            If not specified, backend will use the default index.
+          example: "documents-index"
         vectorThreshold:
           type: number
           minimum: 0.0
@@ -29,7 +35,17 @@ RagQueryRequest:
           minimum: 1
           maximum: 10
           default: 3
-          description: Maximum number of results to return
+          description: "Number of most similar vectors to retrieve (standard top-K parameter)"
+        maxAnswers:
+          type: integer
+          minimum: 1
+          maximum: 5
+          default: 3
+          description: "Maximum number of extractive answers to generate from retrieved documents"
+        semanticConfiguration:
+          type: string
+          default: "default"
+          description: "Name of the semantic configuration to use for semantic ranking and captions"
         filter:
           type: string
           description: OData filter expression (e.g., "status eq 'active' and category eq 'document'")
