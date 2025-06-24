@@ -46,6 +46,8 @@ paths:
     $ref: './paths/companies.yaml#/company'
   /companies:
     $ref: './paths/companies.yaml#/companies'
+  /rag/document/upload:
+    $ref: './paths/rag.yaml#/uploadDocument'
   /rag/query:
     $ref: './paths/rag.yaml#/query'
   /rag/index/update:

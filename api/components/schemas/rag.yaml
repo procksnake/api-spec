@@ -9,7 +9,7 @@ RagQueryRequest:
       minLength: 2
       maxLength: 2000
       description: User query
-      example: "What is list comprehension in Python?"
+      example: 'What is list comprehension in Python?'
     sessionId:
       type: integer
       format: uint64
@@ -23,11 +23,11 @@ RagQueryRequest:
           description: |
             Name of the Azure AI Search index to query.
             If not specified, backend will use the default index.
-          example: "documents-index"
+          example: 'documents-index'
         semanticConfiguration:
           type: string
-          default: "default"
-          description: "Name of the semantic configuration to use for semantic ranking and captions"
+          default: 'default'
+          description: 'Name of the semantic configuration to use for semantic ranking and captions'
         filter:
           type: string
           description: OData filter expression (e.g., "status eq 'active' and category eq 'document'")
@@ -54,16 +54,16 @@ RagQueryRequest:
           description: Maximum response length
         systemPrompt:
           type: string
-          default: "You are a helpful assistant. Answer based on the provided context."
+          default: 'You are a helpful assistant. Answer based on the provided context.'
           description: System prompt to guide response style and behavior
 
 RagQueryResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/RagQueryData"
+          $ref: '#/RagQueryData'
 
 RagQueryData:
   type: object
@@ -75,7 +75,7 @@ RagQueryData:
     queryId:
       type: string
       description: Unique query identifier
-      example: "query_abc123"
+      example: 'query_abc123'
     sessionId:
       type: integer
       format: uint64
@@ -83,19 +83,19 @@ RagQueryData:
     response:
       type: string
       description: LLM generated response
-      example: "List comprehension is a concise way to create lists in Python..."
+      example: 'List comprehension is a concise way to create lists in Python...'
     sources:
       type: array
       description: Referenced documents
       items:
-        $ref: "#/RagQuerySource"
+        $ref: '#/RagQuerySource'
     similarQueries:
       type: array
       description: Similar previous queries
       items:
-        $ref: "#/RagSimilarQuery"
+        $ref: '#/RagSimilarQuery'
     metadata:
-      $ref: "#/RagResponseMetadata"
+      $ref: '#/RagResponseMetadata'
 
 RagQuerySource:
   type: object
@@ -201,42 +201,42 @@ RagSessionCreateRequest:
       minLength: 1
       maxLength: 100
       description: Session name
-      example: "Python Learning Session"
+      example: 'Python Learning Session'
     description:
       type: string
       maxLength: 500
       description: Session description
-      example: "Session for learning Python programming concepts"
+      example: 'Session for learning Python programming concepts'
     tags:
       type: array
       items:
         type: string
       description: Session tags
-      example: ["python", "programming", "learning"]
+      example: ['python', 'programming', 'learning']
 
 RagSessionCreateResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/RagSession"
+          $ref: '#/RagSession'
 
 RagSessionListResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/RagSessionListData"
+          $ref: '#/RagSessionListData'
 
 RagSessionGetResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/RagSessionData"
+          $ref: '#/RagSessionData'
 
 RagSessionBase:
   type: object
@@ -251,35 +251,35 @@ RagSessionBase:
     name:
       type: string
       description: Session name
-      example: "Python Learning Session"
+      example: 'Python Learning Session'
     description:
       type: string
       description: Session description
-      example: "Session for learning Python programming concepts"
+      example: 'Session for learning Python programming concepts'
     createdAt:
       type: string
       format: date-time
       description: Session creation timestamp
-      example: "2025-05-24T10:30:00Z"
+      example: '2025-05-24T10:30:00Z'
     updatedAt:
       type: string
       format: date-time
       description: Last update timestamp
-      example: "2025-05-24T14:45:30Z"
+      example: '2025-05-24T14:45:30Z'
     tags:
       type: array
       items:
         type: string
       description: Session tags
-      example: ["python", "programming", "learning"]
+      example: ['python', 'programming', 'learning']
 
 RagSession:
   allOf:
-    - $ref: "#/RagSessionBase"
+    - $ref: '#/RagSessionBase'
 
 RagSessionSummary:
   allOf:
-    - $ref: "#/RagSessionBase"
+    - $ref: '#/RagSessionBase'
     - type: object
       required:
         - totalQueries
@@ -292,11 +292,11 @@ RagSessionSummary:
           type: string
           format: date-time
           description: Timestamp of last query
-          example: "2025-05-24T14:45:30Z"
+          example: '2025-05-24T14:45:30Z'
 
 RagSessionData:
   allOf:
-    - $ref: "#/RagSessionBase"
+    - $ref: '#/RagSessionBase'
     - type: object
       required:
         - queries
@@ -309,10 +309,10 @@ RagSessionData:
         queries:
           type: array
           items:
-            $ref: "#/RagQueryHistory"
+            $ref: '#/RagQueryHistory'
           description: List of queries in the session
         pagination:
-          $ref: "../schemas/common.yaml#/Pagination"
+          $ref: '../schemas/common.yaml#/Pagination'
 
 RagSessionListData:
   type: object
@@ -323,10 +323,10 @@ RagSessionListData:
     sessions:
       type: array
       items:
-        $ref: "#/RagSessionSummary"
+        $ref: '#/RagSessionSummary'
       description: List of session summaries
     pagination:
-      $ref: "../schemas/common.yaml#/Pagination"
+      $ref: '../schemas/common.yaml#/Pagination'
       description: Pagination information
 
 RagIndexUpdateData:
@@ -353,11 +353,11 @@ RagIndexUpdateData:
 
 RagIndexUpdateResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/RagIndexUpdateData"
+          $ref: '#/RagIndexUpdateData'
 
 RagIndexStatusData:
   type: object
@@ -373,15 +373,15 @@ RagIndexStatusData:
       enum: [idle, running, error]
       description: Current index status
     lastExecution:
-      $ref: "#/RagIndexExecutionResult"
+      $ref: '#/RagIndexExecutionResult'
 
 RagIndexStatusResponse:
   allOf:
-    - $ref: "../schemas/common.yaml#/APIResponse"
+    - $ref: '../schemas/common.yaml#/APIResponse'
     - type: object
       properties:
         data:
-          $ref: "#/RagIndexStatusData"
+          $ref: '#/RagIndexStatusData'
 
 RagIndexExecutionResult:
   type: object
@@ -417,3 +417,58 @@ RagIndexExecutionResult:
     warningCount:
       type: integer
       description: Total number of warnings
+
+RagUploadDocumentResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/RagUploadDocumentData'
+
+RagUploadDocumentData:
+  type: object
+  properties:
+    sessionId:
+      type: integer
+      format: int64
+      description: Session identifier used for this upload
+      example: 1234567890123456789
+    uploadedFiles:
+      type: array
+      items:
+        $ref: '#/RagUploadedFileInfo'
+      description: Information about each uploaded file
+  required:
+    - sessionId
+    - uploadedFiles
+
+RagUploadedFileInfo:
+  type: object
+  properties:
+    fileName:
+      type: string
+      description: Original name of the uploaded file
+      example: 'investment-report-2024.pdf'
+    fileSize:
+      type: string
+      description: Size of the uploaded file
+      example: '2.5MB'
+    status:
+      type: string
+      enum: ['queued', 'processing', 'completed', 'failed']
+      description: Processing status of this specific file
+      example: 'queued'
+    documentId:
+      type: string
+      description: Unique identifier assigned to this document
+      example: 'doc-456789'
+    errorMessage:
+      type: string
+      description: Error message if file processing failed
+      example: 'Unsupported file format'
+  required:
+    - fileName
+    - fileSize
+    - status
+    - documentId

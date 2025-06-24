@@ -306,3 +306,53 @@ indexStatus:
                     warningCount: 2
                     isCompleted: false
                     isRunning: true
+
+uploadDocument:
+  post:
+    tags:
+      - Rag
+    summary: Upload documents to RAG knowledge base
+    description: |
+      Uploads one or more documents to the RAG knowledge base for indexing including:
+      - PDF
+    operationId: uploadRagDocument
+    parameters:
+      - name: sessionId
+        in: query
+        required: true
+        description: Session identifier to track upload operations
+        schema:
+          type: integer
+          format: int64
+          example: 1234567890123456789
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              files:
+                type: array
+                items:
+                  type: string
+                  format: binary
+                description: Document files to upload
+              metadata:
+                type: string
+                description: JSON string containing document metadata
+                example: '{"category": "financial", "department": "investment"}'
+            required:
+              - files
+    responses:
+      '200':
+        description: Documents uploaded successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/rag.yaml#/RagUploadDocumentResponse'
+            examples:
+              successful_upload:
+                summary: Documents uploaded successfully
+                value:
+                  sessionId: 1234567890123456789
