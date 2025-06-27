@@ -205,6 +205,8 @@ RagSessionCreateRequest:
       maxLength: 100
       description: Session name
       example: "Python Learning Session"
+    category:
+      type: string
     description:
       type: string
       maxLength: 500
