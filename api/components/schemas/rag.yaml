@@ -56,6 +56,9 @@ RagQueryRequest:
           type: string
           default: "You are a helpful assistant. Answer based on the provided context."
           description: System prompt to guide response style and behavior
+    noSearch:
+      type: boolean
+      description: Query without search
 
 RagQueryResponse:
   allOf:

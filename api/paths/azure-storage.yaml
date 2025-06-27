@@ -10,19 +10,19 @@ sas-token:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/azure-storage.yaml#/AzureStorageCreateSASTokenRequest'
+            $ref: "../components/schemas/azure-storage.yaml#/AzureStorageCreateSASTokenRequest"
     responses:
-      '200':
+      "200":
         description: Successfully generated SAS token
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/azure-storage.yaml#/AzureStorageCreateSASTokenResponse'
-      '400':
+              $ref: "../components/schemas/azure-storage.yaml#/AzureStorageCreateSASTokenResponse"
+      "400":
         description: Invalid request parameter
-      '401':
+      "401":
         description: Authentication failed
-      '500':
+      "500":
         description: Server error
 
 containers:
@@ -40,35 +40,35 @@ containers:
           schema:
             type: string
           description: Azure Blob Storage container name
-          example: 'documents'
+          example: "documents"
       requestBody:
         required: true
         content:
           multipart/form-data:
             schema:
-              $ref: '../components/schemas/azure-storage.yaml#/AzureStorageUploadRequest'
+              $ref: "../components/schemas/azure-storage.yaml#/AzureStorageUploadRequest"
       responses:
         200:
           description: File uploaded successfully
           content:
             application/json:
               schema:
-                $ref: '../components/schemas/azure-storage.yaml#/AzureStorageUploadResponse'
+                $ref: "../components/schemas/azure-storage.yaml#/AzureStorageUploadResponse"
         400:
           description: Bad request - invalid parameters
           content:
             application/json:
               schema:
-                $ref: '../components/schemas/common.yaml#/APIResponse'
+                $ref: "../components/schemas/common.yaml#/APIResponse"
         409:
           description: Conflict - blob already exists and overwrite is false
           content:
             application/json:
               schema:
-                $ref: '../components/schemas/common.yaml#/APIResponse'
+                $ref: "../components/schemas/common.yaml#/APIResponse"
         500:
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: '../components/schemas/common.yaml#/APIResponse'
+                $ref: "../components/schemas/common.yaml#/APIResponse"
