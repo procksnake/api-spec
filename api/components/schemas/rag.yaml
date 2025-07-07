@@ -151,24 +151,21 @@ RagResponseMetadata:
   type: object
   description: Response processing metadata
   properties:
-    processingTimeMs:
+    searchTimeMs:
       type: integer
       description: Total processing time (milliseconds)
-    vectorSearchTimeMs:
+    queryTimeMs:
       type: integer
       description: Vector search time (milliseconds)
-    llmResponseTimeMs:
+    inputTokens:
       type: integer
-      description: LLM response generation time (milliseconds)
-    similarityCheckTimeMs:
+      description: Total number of input tokens
+    outputTokens:
       type: integer
-      description: Similarity check time (milliseconds)
+      description: Total number of output tokens
     sourcesCount:
       type: integer
       description: Number of referenced documents
-    similarQueriesCount:
-      type: integer
-      description: Number of similar queries found
 
 RagQueryHistory:
   type: object
