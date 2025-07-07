@@ -26,8 +26,6 @@ paths:
     $ref: "./paths/api-keys.yaml#/api-keys"
   /api-keys/{key}:
     $ref: "./paths/api-keys.yaml#/api-key"
-  /azure-event-grid:
-    $ref: "./paths/azure-event-grid.yaml#/azure-event-grid"
   /azure-stroage/sas-token:
     $ref: "./paths/azure-storage.yaml#/sas-token"
   /azure-storage/containers/{containerName}/blobs:
