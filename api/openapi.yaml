@@ -74,7 +74,7 @@ components:
         - auth.access_token.expired
         - auth.access_token.invalid
         - auth.access_token.invalid_issuer
-        - auth.access_token.invalid_issuer
+        - auth.access_token.invalid_audience
         - auth.api_key.invalid
         - auth.invalid_credential
         - database.not_found
