@@ -4,6 +4,53 @@ Error:
   properties:
     code:
       type: string
+      enum:
+        - auth.access_token.missing
+        - auth.access_token.expired
+        - auth.access_token.invalid
+        - auth.access_token.invalid_issuer
+        - auth.access_token.invalid_issuer
+        - auth.api_key.invalid
+        - auth.invalid_credential
+        - database.not_found
+        - database.conflict
+        - database.invalid_foreign_key
+        - database.too_long_input
+        - database.invalid_input_type
+        - database.invalid_input_value
+        - database.invalid_permission
+        - database.internal
+        - internal.unknown
+        - request.body_read_failed
+        - request.canceled
+        - request.timeout
+        - request.internal
+        - validation.required_field
+        - validation.invalid_format
+      x-enum-varnames:
+        - ErrAuthAccessTokenMissing
+        - ErrAuthAccessTokenExpired
+        - ErrAuthAccessTokenInvalid
+        - ErrAuthAccessTokenInvalidIssuer
+        - ErrAuthAccessTokenInvalidAudience
+        - ErrAuthAPIKeyInvalid
+        - ErrAuthInvalidCredential
+        - ErrDatabaseNotFound
+        - ErrDatabaseConflict
+        - ErrDatabaseInvalidForeignKey
+        - ErrDatabaseTooLongInput
+        - ErrDatabaseInvalidInputType
+        - ErrDatabaseInvalidInputValue
+        - ErrDatabaseInvalidPermission
+        - ErrDatabaseInternal
+        - ErrInternalUnknown
+        - ErrRequestBodyReadFailed
+        - ErrRequestCanceled
+        - ErrRequestTimeout
+        - ErrRequestInternal
+        - ErrValidationRequired
+        - ErrValidationFormat
+
     message:
       type: string
     details:

@@ -42,7 +42,6 @@ $(GO_SERVER_GEN): $(BUNDLED_API) $(FIX_GO_ERROR_SCRIPT)
 	mkdir -p backend/internal/api
 	#oapi-codegen -package api -generate gin -o $@ $< 
 	oapi-codegen -package api -generate gin,types,spec -templates go_templates -o $@ $(BUNDLED_API)
-	python $(ENUM_GO_SCRIPT) $(BUNDLED_API) $(ENUM_GO_OUTPUT) 
 	/bin/bash $(FIX_GO_ERROR_SCRIPT) $@
 
 gen-go-server: $(GO_SERVER_GEN)
