@@ -9,7 +9,7 @@ RagQueryRequest:
       minLength: 2
       maxLength: 2000
       description: User query
-      example: 'What is list comprehension in Python?'
+      example: "What is list comprehension in Python?"
     sessionId:
       type: integer
       format: uint64
@@ -23,11 +23,11 @@ RagQueryRequest:
           description: |
             Name of the Azure AI Search index to query.
             If not specified, backend will use the default index.
-          example: 'documents-index'
+          example: "documents-index"
         semanticConfiguration:
           type: string
-          default: 'default'
-          description: 'Name of the semantic configuration to use for semantic ranking and captions'
+          default: "default"
+          description: "Name of the semantic configuration to use for semantic ranking and captions"
         filter:
           type: string
           description: OData filter expression (e.g., "status eq 'active' and category eq 'document'")
@@ -54,7 +54,7 @@ RagQueryRequest:
           description: Maximum response length
         systemPrompt:
           type: string
-          default: 'You are a helpful assistant. Answer based on the provided context.'
+          default: "You are a helpful assistant. Answer based on the provided context."
           description: System prompt to guide response style and behavior
     noSearch:
       type: boolean
@@ -62,11 +62,11 @@ RagQueryRequest:
 
 RagQueryResponse:
   allOf:
-    - $ref: '../schemas/common.yaml#/APIResponse'
+    - $ref: "../schemas/common.yaml#/APIResponse"
     - type: object
       properties:
         data:
-          $ref: '#/RagQueryData'
+          $ref: "#/RagQueryData"
 
 RagQueryData:
   type: object
@@ -78,7 +78,7 @@ RagQueryData:
     queryId:
       type: string
       description: Unique query identifier
-      example: 'query_abc123'
+      example: "query_abc123"
     sessionId:
       type: integer
       format: uint64
@@ -86,19 +86,19 @@ RagQueryData:
     response:
       type: string
       description: LLM generated response
-      example: 'List comprehension is a concise way to create lists in Python...'
+      example: "List comprehension is a concise way to create lists in Python..."
     sources:
       type: array
       description: Referenced documents
       items:
-        $ref: '#/RagQuerySource'
+        $ref: "#/RagQuerySource"
     similarQueries:
       type: array
       description: Similar previous queries
       items:
-        $ref: '#/RagSimilarQuery'
+        $ref: "#/RagSimilarQuery"
     metadata:
-      $ref: '#/RagResponseMetadata'
+      $ref: "#/RagResponseMetadata"
 
 RagQuerySource:
   type: object
@@ -151,48 +151,21 @@ RagResponseMetadata:
   type: object
   description: Response processing metadata
   properties:
-    processingTimeMs:
+    searchTimeMs:
       type: integer
       description: Total processing time (milliseconds)
-    vectorSearchTimeMs:
+    queryTimeMs:
       type: integer
       description: Vector search time (milliseconds)
-    llmResponseTimeMs:
+    inputTokens:
       type: integer
-      description: LLM response generation time (milliseconds)
-    similarityCheckTimeMs:
+      description: Total number of input tokens
+    outputTokens:
       type: integer
-      description: Similarity check time (milliseconds)
+      description: Total number of output tokens
     sourcesCount:
       type: integer
       description: Number of referenced documents
-    similarQueriesCount:
-      type: integer
-      description: Number of similar queries found
-
-RagQueryHistory:
-  type: object
-  required:
-    - queryId
-    - query
-    - timestamp
-  properties:
-    queryId:
-      type: string
-      description: Query identifier
-    query:
-      type: string
-      description: Original query
-    response:
-      type: string
-      description: Generated response
-    timestamp:
-      type: string
-      format: date-time
-      description: Query timestamp
-    processingTimeMs:
-      type: integer
-      description: Processing time (milliseconds)
 
 RagSessionCreateRequest:
   type: object
@@ -204,44 +177,44 @@ RagSessionCreateRequest:
       minLength: 1
       maxLength: 100
       description: Session name
-      example: 'Python Learning Session'
+      example: "Python Learning Session"
     category:
       type: string
     description:
       type: string
       maxLength: 500
       description: Session description
-      example: 'Session for learning Python programming concepts'
+      example: "Session for learning Python programming concepts"
     tags:
       type: array
       items:
         type: string
       description: Session tags
-      example: ['python', 'programming', 'learning']
+      example: ["python", "programming", "learning"]
 
 RagSessionCreateResponse:
   allOf:
-    - $ref: '../schemas/common.yaml#/APIResponse'
+    - $ref: "../schemas/common.yaml#/APIResponse"
     - type: object
       properties:
         data:
-          $ref: '#/RagSession'
+          $ref: "#/RagSession"
 
 RagSessionListResponse:
   allOf:
-    - $ref: '../schemas/common.yaml#/APIResponse'
+    - $ref: "../schemas/common.yaml#/APIResponse"
     - type: object
       properties:
         data:
-          $ref: '#/RagSessionListData'
+          $ref: "#/RagSessionListData"
 
 RagSessionGetResponse:
   allOf:
-    - $ref: '../schemas/common.yaml#/APIResponse'
+    - $ref: "../schemas/common.yaml#/APIResponse"
     - type: object
       properties:
         data:
-          $ref: '#/RagSessionData'
+          $ref: "#/RagSessionData"
 
 RagSessionBase:
   type: object
@@ -256,37 +229,37 @@ RagSessionBase:
     name:
       type: string
       description: Session name
-      example: 'Python Learning Session'
+      example: "Python Learning Session"
     category:
       type: string
     description:
       type: string
       description: Session description
-      example: 'Session for learning Python programming concepts'
+      example: "Session for learning Python programming concepts"
     createdAt:
       type: string
       format: date-time
       description: Session creation timestamp
-      example: '2025-05-24T10:30:00Z'
+      example: "2025-05-24T10:30:00Z"
     updatedAt:
       type: string
       format: date-time
       description: Last update timestamp
-      example: '2025-05-24T14:45:30Z'
+      example: "2025-05-24T14:45:30Z"
     tags:
       type: array
       items:
         type: string
       description: Session tags
-      example: ['python', 'programming', 'learning']
+      example: ["python", "programming", "learning"]
 
 RagSession:
   allOf:
-    - $ref: '#/RagSessionBase'
+    - $ref: "#/RagSessionBase"
 
 RagSessionSummary:
   allOf:
-    - $ref: '#/RagSessionBase'
+    - $ref: "#/RagSessionBase"
     - type: object
       required:
         - totalQueries
@@ -299,27 +272,34 @@ RagSessionSummary:
           type: string
           format: date-time
           description: Timestamp of last query
-          example: '2025-05-24T14:45:30Z'
+          example: "2025-05-24T14:45:30Z"
 
 RagSessionData:
   allOf:
-    - $ref: '#/RagSessionBase'
+    - $ref: "#/RagSessionBase"
     - type: object
       required:
-        - queries
-        - totalQueries
+        - history
       properties:
-        totalQueries:
-          type: integer
-          description: Total number of queries in session
-          example: 15
-        queries:
+        history:
           type: array
           items:
-            $ref: '#/RagQueryHistory'
+            $ref: "#/RagSessionHistory"
           description: List of queries in the session
         pagination:
-          $ref: '../schemas/common.yaml#/Pagination'
+          $ref: "../schemas/common.yaml#/Pagination"
+
+RagSessionHistory:
+  type: object
+  required:
+    - query
+    - queryResult
+  properties:
+    query:
+      type: string
+      description: User query text
+    queryResult:
+      $ref: "#/RagQueryData"
 
 RagSessionListData:
   type: object
@@ -330,10 +310,10 @@ RagSessionListData:
     sessions:
       type: array
       items:
-        $ref: '#/RagSessionSummary'
+        $ref: "#/RagSessionSummary"
       description: List of session summaries
     pagination:
-      $ref: '../schemas/common.yaml#/Pagination'
+      $ref: "../schemas/common.yaml#/Pagination"
       description: Pagination information
 
 RagIndexUpdateData:
@@ -360,11 +340,11 @@ RagIndexUpdateData:
 
 RagIndexUpdateResponse:
   allOf:
-    - $ref: '../schemas/common.yaml#/APIResponse'
+    - $ref: "../schemas/common.yaml#/APIResponse"
     - type: object
       properties:
         data:
-          $ref: '#/RagIndexUpdateData'
+          $ref: "#/RagIndexUpdateData"
 
 RagIndexStatusData:
   type: object
@@ -380,15 +360,15 @@ RagIndexStatusData:
       enum: [idle, running, error]
       description: Current index status
     lastExecution:
-      $ref: '#/RagIndexExecutionResult'
+      $ref: "#/RagIndexExecutionResult"
 
 RagIndexStatusResponse:
   allOf:
-    - $ref: '../schemas/common.yaml#/APIResponse'
+    - $ref: "../schemas/common.yaml#/APIResponse"
     - type: object
       properties:
         data:
-          $ref: '#/RagIndexStatusData'
+          $ref: "#/RagIndexStatusData"
 
 RagIndexExecutionResult:
   type: object
@@ -430,26 +410,23 @@ RagUploadDocumentRequest:
   type: object
   required:
     - file
-    - fileName
   properties:
     file:
       type: string
       format: binary
       description: File to upload
-      x-go-type: '*multipart.FileHeader'
-      x-go-tag: 'json:"file" form:"file"'
-    fileName:
-      type: string
-      description: Name for the blob (file) in storage
-      example: 'document.pdf'
+      x-go-type: "*multipart.FileHeader"
+      x-oapi-codegen-extra-tags:
+        form: "file"
+        binding: "required"
 
 RagUploadDocumentResponse:
   allOf:
-    - $ref: '../schemas/common.yaml#/APIResponse'
+    - $ref: "../schemas/common.yaml#/APIResponse"
     - type: object
       properties:
         data:
-          $ref: '#/RagUploadDocumentData'
+          $ref: "#/RagUploadDocumentData"
 
 RagUploadDocumentData:
   type: object
@@ -462,7 +439,7 @@ RagUploadDocumentData:
     uploadedFiles:
       type: array
       items:
-        $ref: '#/RagUploadedFileInfo'
+        $ref: "#/RagUploadedFileInfo"
       description: Information about each uploaded file
   required:
     - sessionId
@@ -474,24 +451,24 @@ RagUploadedFileInfo:
     fileName:
       type: string
       description: Original name of the uploaded file
-      example: 'investment-report-2024.pdf'
+      example: "investment-report-2024.pdf"
     fileSize:
       type: string
       description: Size of the uploaded file
-      example: '2.5MB'
+      example: "2.5MB"
     status:
       type: string
-      enum: ['queued', 'processing', 'completed', 'failed']
+      enum: ["queued", "processing", "completed", "failed"]
       description: Processing status of this specific file
-      example: 'queued'
+      example: "queued"
     documentId:
       type: string
       description: Unique identifier assigned to this document
-      example: 'doc-456789'
+      example: "doc-456789"
     errorMessage:
       type: string
       description: Error message if file processing failed
-      example: 'Unsupported file format'
+      example: "Unsupported file format"
   required:
     - fileName
     - fileSize

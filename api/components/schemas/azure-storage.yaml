@@ -51,7 +51,9 @@ AzureStorageUploadRequest:
       format: binary
       description: File to upload
       x-go-type: "*multipart.FileHeader"
-      x-go-tag: 'json:"file" form:"file"'
+      x-oapi-codegen-extra-tags:
+        form: "file"
+        binding: "required"
     blobName:
       type: string
       description: Name for the blob (file) in storage

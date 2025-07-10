@@ -15,7 +15,7 @@ FIX_GO_ERROR_SCRIPT = fix_go_errors.sh
 ENUM_GO_SCRIPT = go_gen_error_enum.py
 ENUM_GO_OUTPUT = backend/internal/api/error_code.gen.go
 
-.PHONY: gen-ts gen-common gen-go gen ts-api-gen ogen clean
+.PHONY: gen-ts gen-common gen-go gen ts-api-gen ogen clean bundled-api
 
 gen: ts-api-gen gen-go
 
@@ -24,6 +24,8 @@ $(BUNDLED_DIR):
 
 $(BUNDLED_API): $(API_YAML_FILES) | $(BUNDLED_DIR)
 	npx @redocly/cli bundle $(API_DIR)/openapi.yaml -o $@
+
+bundled-api: $(BUNDLED_API)
 
 $(TS_API_GEN): $(BUNDLED_API) $(RENAME_SCRIPT)
 	npx openapi-typescript-codegen --input $< --output $@ --useOptions --useUnionTypes
