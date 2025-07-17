@@ -9,7 +9,7 @@ Error:
         - auth.access_token.expired
         - auth.access_token.invalid
         - auth.access_token.invalid_issuer
-        - auth.access_token.invalid_issuer
+        - auth.access_token.invalid_audience
         - auth.api_key.invalid
         - auth.invalid_credential
         - database.not_found
@@ -25,6 +25,12 @@ Error:
         - request.canceled
         - request.timeout
         - request.internal
+        - request.binding_failed
+        - request.invalid_json
+        - request.invalid_content_type
+        - request.invalid_field_type
+        - request.malformed_json
+        - request.connection_lost
         - validation.required_field
         - validation.invalid_format
       x-enum-varnames:
@@ -48,6 +54,12 @@ Error:
         - ErrRequestCanceled
         - ErrRequestTimeout
         - ErrRequestInternal
+        - ErrRequestBindingFailed
+        - ErrRequestInvalidJSON
+        - ErrRequestInvalidContentType
+        - ErrRequestInvalidFieldType
+        - ErrRequestMalformedJSON
+        - ErrRequestConnectionLost
         - ErrValidationRequired
         - ErrValidationFormat
 
