@@ -1,0 +1,244 @@
+TicketCategory:
+  type: object
+  x-go-name: TicketCategoryConfig
+  properties:
+    id:
+      type: integer
+      format: uint64
+      example: 1
+    name:
+      type: string
+      example: "Technical Support"
+    description:
+      type: string
+      example: "Technical issues and troubleshooting"
+    color:
+      type: string
+      example: "#ff0000"
+    icon:
+      type: string
+      example: "wrench"
+    active:
+      type: boolean
+      example: true
+    createdAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+    updatedAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+  required:
+    - id
+    - name
+    - active
+    - createdAt
+    - updatedAt
+
+TicketCategoryBase:
+  type: object
+  properties:
+    name:
+      type: string
+      example: "Technical Support"
+    description:
+      type: string
+      example: "Technical issues and troubleshooting"
+    color:
+      type: string
+      example: "#ff0000"
+    icon:
+      type: string
+      example: "wrench"
+    active:
+      type: boolean
+      example: true
+  required:
+    - name
+    - active
+
+TicketPriority:
+  type: object
+  x-go-name: TicketPriorityConfig
+  properties:
+    id:
+      type: integer
+      format: uint64
+      example: 1
+    name:
+      type: string
+      example: "High"
+    level:
+      type: integer
+      description: Priority level (1=lowest, 4=highest)
+      example: 3
+    color:
+      type: string
+      example: "#ff9900"
+    icon:
+      type: string
+      example: "exclamation"
+    active:
+      type: boolean
+      example: true
+    createdAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+    updatedAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+  required:
+    - id
+    - name
+    - level
+    - active
+    - createdAt
+    - updatedAt
+
+TicketStatus:
+  type: object
+  x-go-name: TicketStatusConfig
+  properties:
+    id:
+      type: integer
+      format: uint64
+      example: 1
+    name:
+      type: string
+      example: "In Progress"
+    key:
+      type: string
+      example: "in_progress"
+    description:
+      type: string
+      example: "Ticket is currently being worked on"
+    color:
+      type: string
+      example: "#0066cc"
+    icon:
+      type: string
+      example: "clock"
+    isClosedStatus:
+      type: boolean
+      example: false
+    isResolvedStatus:
+      type: boolean
+      example: false
+    order:
+      type: integer
+      example: 2
+    active:
+      type: boolean
+      example: true
+    createdAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+    updatedAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+  required:
+    - id
+    - name
+    - key
+    - isClosedStatus
+    - isResolvedStatus
+    - order
+    - active
+    - createdAt
+    - updatedAt
+
+TicketTag:
+  type: object
+  x-go-name: TicketTagConfig
+  properties:
+    id:
+      type: integer
+      format: uint64
+      example: 1
+    name:
+      type: string
+      example: "urgent"
+    description:
+      type: string
+      example: "Urgent issues requiring immediate attention"
+    color:
+      type: string
+      example: "#ff0000"
+    usageCount:
+      type: integer
+      example: 42
+    active:
+      type: boolean
+      example: true
+    createdAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+    updatedAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+  required:
+    - id
+    - name
+    - usageCount
+    - active
+    - createdAt
+    - updatedAt
+
+# Response schemas
+TicketCategoryListResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/TicketCategory'
+
+TicketCategoryCreateRequest:
+  $ref: '#/TicketCategoryBase'
+
+TicketCategoryCreateResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/TicketCategory'
+
+TicketPriorityListResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/TicketPriority'
+
+TicketStatusListResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/TicketStatus'
+
+TicketTagListResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/TicketTag'

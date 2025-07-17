@@ -12,8 +12,6 @@ api-key:
         description: key of the api-key to delete
         schema:
           type: string
-    security:
-      - bearerAuth: ["apikey:delete"]
     responses:
       "204":
         description: APIKey deleted successfully
@@ -31,8 +29,6 @@ api-keys:
         application/json:
           schema:
             $ref: "../components/schemas/api-key.yaml#/APIKeyCreateRequest"
-    security:
-      - bearerAuth: ["apikey:create"]
     responses:
       "201":
         description: APIKey created

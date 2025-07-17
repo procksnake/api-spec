@@ -1,0 +1,364 @@
+llm-endpoint:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Get a specific LLM endpoint
+    operationId: getLLMEndpoint
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the LLM endpoint to retrieve
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "200":
+        description: Successfully retrieved LLM endpoint
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointGetResponse"
+      "404":
+        description: LLM endpoint not found
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+  put:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Update a specific LLM endpoint
+    operationId: updateLLMEndpoint
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the LLM endpoint to update
+        schema:
+          type: integer
+          format: uint64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointUpdateRequest"
+    responses:
+      "200":
+        description: LLM endpoint updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointUpdateResponse"
+      "400":
+        description: Invalid request data
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "404":
+        description: LLM endpoint not found
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+  delete:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Delete a specific LLM endpoint
+    operationId: deleteLLMEndpoint
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the LLM endpoint to delete
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "204":
+        description: LLM endpoint deleted successfully
+      "404":
+        description: LLM endpoint not found
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+llm-endpoints:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Get LLM endpoints list
+    operationId: listLLMEndpoints
+    parameters:
+      - name: page
+        in: query
+        description: Page number to retrieve
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: limit
+        in: query
+        description: Number of items per page
+        required: false
+        schema:
+          type: integer
+          default: 30
+          minimum: 1
+          maximum: 100
+      - name: provider
+        in: query
+        description: Filter by provider
+        required: false
+        schema:
+          type: string
+          enum:
+            ["openai", "anthropic", "azure", "google", "huggingface", "custom"]
+      - name: isActive
+        in: query
+        description: Filter by active status
+        required: false
+        schema:
+          type: boolean
+      - name: healthStatus
+        in: query
+        description: Filter by health status
+        required: false
+        schema:
+          type: string
+          enum: ["healthy", "unhealthy", "unknown"]
+      - name: tags
+        in: query
+        description: Filter by tags (comma-separated)
+        required: false
+        schema:
+          type: string
+          example: "production,gpt-4"
+      - name: sortBy
+        in: query
+        description: Sort by field
+        required: false
+        schema:
+          type: string
+          enum:
+            [
+              "name",
+              "provider",
+              "priority",
+              "createdAt",
+              "updatedAt",
+              "errorCount",
+            ]
+          default: "priority"
+      - name: sortOrder
+        in: query
+        description: Sort order
+        required: false
+        schema:
+          type: string
+          enum: ["asc", "desc"]
+          default: "asc"
+    responses:
+      "200":
+        description: Successfully retrieved LLM endpoints list
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointListResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+  post:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Create LLM endpoint
+    operationId: createLLMEndpoint
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointCreateRequest"
+    responses:
+      "201":
+        description: LLM endpoint created successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointCreateResponse"
+      "400":
+        description: Invalid request data
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "409":
+        description: LLM endpoint with same name already exists
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+llm-endpoint-test:
+  post:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Test LLM endpoint connectivity
+    description: |
+      Tests the connectivity and functionality of a specific LLM endpoint
+      by sending a test message and measuring response time.
+    operationId: testLLMEndpoint
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the LLM endpoint to test
+        schema:
+          type: integer
+          format: uint64
+    requestBody:
+      required: false
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointTestRequest"
+    responses:
+      "200":
+        description: Test completed successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointTestResponse"
+      "400":
+        description: Invalid request data
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "404":
+        description: LLM endpoint not found
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+llm-endpoint-health:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Get LLM endpoint health status
+    description: |
+      Retrieves detailed health information for a specific LLM endpoint
+      including uptime, error rates, and performance metrics.
+    operationId: getLLMEndpointHealth
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the LLM endpoint to check
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "200":
+        description: Health status retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointHealthResponse"
+      "404":
+        description: LLM endpoint not found
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+  post:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Trigger manual health check
+    description: |
+      Manually triggers a health check for a specific LLM endpoint
+      and returns the updated health status.
+    operationId: triggerLLMEndpointHealthCheck
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the LLM endpoint to check
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "200":
+        description: Health check completed successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointHealthResponse"
+      "404":
+        description: LLM endpoint not found
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"

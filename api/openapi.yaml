@@ -60,6 +60,61 @@ paths:
     $ref: "./paths/users.yaml#/user"
   /users:
     $ref: "./paths/users.yaml#/users"
+  /llm-endpoints:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints"
+  /llm-endpoints/{id}:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoint"
+  /llm-endpoints/{id}/test:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoint-test"
+  /llm-endpoints/{id}/health:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoint-health"
+  # Tickets
+  /tickets:
+    $ref: "./paths/tickets.yaml#/tickets"
+  /tickets/{id}:
+    $ref: "./paths/tickets.yaml#/ticket"
+  /tickets/{id}/status:
+    $ref: "./paths/tickets.yaml#/ticket-status"
+  /tickets/{id}/priority:
+    $ref: "./paths/tickets.yaml#/ticket-priority"
+  /tickets/{id}/assign:
+    $ref: "./paths/tickets.yaml#/ticket-assign"
+  /tickets/{id}/comments:
+    $ref: "./paths/tickets.yaml#/ticket-comments"
+  /tickets/{id}/attachments:
+    $ref: "./paths/tickets.yaml#/ticket-attachments"
+  /tickets/{id}/sla-status:
+    $ref: "./paths/tickets.yaml#/ticket-sla-status"
+  /tickets/{id}/escalate:
+    $ref: "./paths/tickets.yaml#/ticket-escalate"
+  /tickets/{id}/timeline:
+    $ref: "./paths/tickets.yaml#/ticket-timeline"
+  /tickets/{id}/sla-times:
+    $ref: "./paths/tickets.yaml#/ticket-sla-times"
+  /tickets/{id}/pause-sla:
+    $ref: "./paths/tickets.yaml#/ticket-pause-sla"
+  /tickets/{id}/resume-sla:
+    $ref: "./paths/tickets.yaml#/ticket-resume-sla"
+  /tickets/{id}/exempt-sla:
+    $ref: "./paths/tickets.yaml#/ticket-exempt-sla"
+  # SLA Management
+  /tickets/sla-policies:
+    $ref: "./paths/tickets.yaml#/sla-policies"
+  /tickets/sla-policies/{id}:
+    $ref: "./paths/tickets.yaml#/sla-policy"
+  /tickets/sla-breaches:
+    $ref: "./paths/tickets.yaml#/sla-breaches"
+  /tickets/near-breach:
+    $ref: "./paths/tickets.yaml#/sla-near-breach"
+  # Ticket Configuration
+  /tickets/categories:
+    $ref: "./paths/tickets.yaml#/ticket-categories"
+  /tickets/priorities:
+    $ref: "./paths/tickets.yaml#/ticket-priorities"
+  /tickets/statuses:
+    $ref: "./paths/tickets.yaml#/ticket-statuses"
+  /tickets/tags:
+    $ref: "./paths/tickets.yaml#/ticket-tags"
 
 # 공통 컴포넌트
 components:

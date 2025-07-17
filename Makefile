@@ -10,8 +10,8 @@ API_DIR = api
 BUNDLED_DIR = bundled
 API_YAML_FILES := $(shell find $(API_DIR) -name "*.yaml")
 BUNDLED_API = $(BUNDLED_DIR)/api.yaml
-RENAME_SCRIPT = rename-file.py 
-FIX_GO_ERROR_SCRIPT = fix_go_errors.sh
+RENAME_SCRIPT = scripts/rename-file.py 
+FIX_GO_ERROR_SCRIPT = scripts/fix_go_errors.sh
 ENUM_GO_SCRIPT = go_gen_error_enum.py
 ENUM_GO_OUTPUT = backend/internal/api/error_code.gen.go
 
@@ -45,6 +45,7 @@ $(GO_SERVER_GEN): $(BUNDLED_API) $(FIX_GO_ERROR_SCRIPT)
 	#oapi-codegen -package api -generate gin -o $@ $< 
 	oapi-codegen -package api -generate gin,types,spec -templates go_templates -o $@ $(BUNDLED_API)
 	/bin/bash $(FIX_GO_ERROR_SCRIPT) $@
+	python scripts/remove_middleware_block_go.py backend/internal/api/server.gen.go
 
 gen-go-server: $(GO_SERVER_GEN)
 

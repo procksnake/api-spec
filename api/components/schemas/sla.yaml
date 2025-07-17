@@ -1,0 +1,433 @@
+SLAPolicy:
+  type: object
+  properties:
+    id:
+      type: integer
+      format: uint64
+      example: 1
+    name:
+      type: string
+      example: "Standard Support SLA"
+    description:
+      type: string
+      example: "Standard SLA for regular support tickets"
+    responseTime:
+      type: integer
+      description: Response time in minutes
+      example: 60
+    resolutionTime:
+      type: integer
+      description: Resolution time in minutes
+      example: 480
+    conditions:
+      type: object
+      properties:
+        priority:
+          type: array
+          items:
+            type: string
+          example: ["medium", "high"]
+        category:
+          type: array
+          items:
+            type: string
+          example: ["technical", "billing"]
+        companyId:
+          type: integer
+          format: uint64
+          nullable: true
+          example: 1
+      nullable: true
+    businessHours:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          example: true
+        timezone:
+          type: string
+          example: "UTC"
+        workingDays:
+          type: array
+          items:
+            type: string
+          example: ["monday", "tuesday", "wednesday", "thursday", "friday"]
+        workingHours:
+          type: object
+          properties:
+            start:
+              type: string
+              example: "09:00"
+            end:
+              type: string
+              example: "17:00"
+      nullable: true
+    escalationRules:
+      type: array
+      items:
+        $ref: '#/EscalationRule'
+      nullable: true
+    active:
+      type: boolean
+      example: true
+    createdAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+    updatedAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+  required:
+    - id
+    - name
+    - responseTime
+    - resolutionTime
+    - active
+    - createdAt
+    - updatedAt
+
+SLAPolicyBase:
+  type: object
+  properties:
+    name:
+      type: string
+      example: "Standard Support SLA"
+    description:
+      type: string
+      example: "Standard SLA for regular support tickets"
+    responseTime:
+      type: integer
+      description: Response time in minutes
+      example: 60
+    resolutionTime:
+      type: integer
+      description: Resolution time in minutes
+      example: 480
+    conditions:
+      type: object
+      properties:
+        priority:
+          type: array
+          items:
+            type: string
+          example: ["medium", "high"]
+        category:
+          type: array
+          items:
+            type: string
+          example: ["technical", "billing"]
+        companyId:
+          type: integer
+          format: uint64
+          nullable: true
+          example: 1
+      nullable: true
+    businessHours:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          example: true
+        timezone:
+          type: string
+          example: "UTC"
+        workingDays:
+          type: array
+          items:
+            type: string
+          example: ["monday", "tuesday", "wednesday", "thursday", "friday"]
+        workingHours:
+          type: object
+          properties:
+            start:
+              type: string
+              example: "09:00"
+            end:
+              type: string
+              example: "17:00"
+      nullable: true
+    escalationRules:
+      type: array
+      items:
+        $ref: '#/EscalationRule'
+      nullable: true
+    active:
+      type: boolean
+      example: true
+  required:
+    - name
+    - responseTime
+    - resolutionTime
+    - active
+
+EscalationRule:
+  type: object
+  properties:
+    id:
+      type: integer
+      format: uint64
+      example: 1
+    trigger:
+      type: string
+      enum: [response_time_breach, resolution_time_breach, near_breach]
+      example: "response_time_breach"
+    thresholdMinutes:
+      type: integer
+      description: Minutes before breach to trigger escalation
+      example: 30
+    escalateToId:
+      type: integer
+      format: uint64
+      example: 2
+    notificationChannels:
+      type: array
+      items:
+        type: string
+        enum: [email, sms, webhook]
+      example: ["email", "webhook"]
+    active:
+      type: boolean
+      example: true
+  required:
+    - trigger
+    - escalateToId
+    - active
+
+SLAStatus:
+  type: object
+  properties:
+    ticketId:
+      type: integer
+      format: uint64
+      example: 1
+    policyId:
+      type: integer
+      format: uint64
+      example: 1
+    responseTime:
+      type: object
+      properties:
+        target:
+          type: integer
+          description: Target response time in minutes
+          example: 60
+        elapsed:
+          type: integer
+          description: Time elapsed in minutes
+          example: 45
+        remaining:
+          type: integer
+          nullable: true
+          description: Time remaining in minutes
+          example: 15
+        breached:
+          type: boolean
+          example: false
+        firstResponseAt:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2023-01-01T00:45:00Z"
+    resolutionTime:
+      type: object
+      properties:
+        target:
+          type: integer
+          description: Target resolution time in minutes
+          example: 480
+        elapsed:
+          type: integer
+          description: Time elapsed in minutes
+          example: 420
+        remaining:
+          type: integer
+          nullable: true
+          description: Time remaining in minutes
+          example: 60
+        breached:
+          type: boolean
+          example: false
+        resolvedAt:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2023-01-01T07:00:00Z"
+    pausedTime:
+      type: integer
+      description: Total paused time in minutes
+      example: 30
+    exempted:
+      type: boolean
+      description: Whether ticket is exempted from SLA
+      example: false
+    exemptReason:
+      type: string
+      nullable: true
+      example: "Special customer request"
+    lastCalculatedAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+  required:
+    - ticketId
+    - policyId
+    - responseTime
+    - resolutionTime
+    - pausedTime
+    - exempted
+    - lastCalculatedAt
+
+SLABreach:
+  type: object
+  properties:
+    ticketId:
+      type: integer
+      format: uint64
+      example: 1
+    policyId:
+      type: integer
+      format: uint64
+      example: 1
+    breachType:
+      type: string
+      enum: [response_time, resolution_time]
+      example: "response_time"
+    targetTime:
+      type: integer
+      description: Target time in minutes
+      example: 60
+    actualTime:
+      type: integer
+      description: Actual time in minutes
+      example: 90
+    breachedAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T01:30:00Z"
+    severity:
+      type: string
+      enum: [minor, major, critical]
+      example: "minor"
+    acknowledged:
+      type: boolean
+      example: false
+    acknowledgedBy:
+      type: integer
+      format: uint64
+      nullable: true
+      example: 2
+    acknowledgedAt:
+      type: string
+      format: date-time
+      nullable: true
+      example: "2023-01-01T01:45:00Z"
+  required:
+    - ticketId
+    - policyId
+    - breachType
+    - targetTime
+    - actualTime
+    - breachedAt
+    - severity
+    - acknowledged
+
+# Response schemas
+SLAPolicyListResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/SLAPolicyListData'
+
+SLAPolicyGetResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/SLAPolicy'
+
+SLAPolicyCreateRequest:
+  $ref: '#/SLAPolicyBase'
+
+SLAPolicyCreateResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/SLAPolicy'
+
+SLAPolicyUpdateRequest:
+  $ref: '#/SLAPolicyBase'
+
+SLAPolicyUpdateResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/SLAPolicy'
+
+SLAPolicyListData:
+  type: object
+  required:
+    - policies
+    - pagination
+  properties:
+    policies:
+      type: array
+      items:
+        $ref: '#/SLAPolicy'
+      description: List of SLA policies
+    pagination:
+      $ref: '../schemas/common.yaml#/Pagination'
+      description: Pagination information
+
+SLABreachListResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/SLABreachListData'
+
+SLABreachListData:
+  type: object
+  required:
+    - breaches
+    - pagination
+  properties:
+    breaches:
+      type: array
+      items:
+        $ref: '#/SLABreach'
+      description: List of SLA breaches
+    pagination:
+      $ref: '../schemas/common.yaml#/Pagination'
+      description: Pagination information
+
+SLANearBreachListResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/SLANearBreachListData'
+
+SLANearBreachListData:
+  type: object
+  required:
+    - tickets
+    - pagination
+  properties:
+    tickets:
+      type: array
+      items:
+        $ref: '../schemas/ticket.yaml#/Ticket'
+      description: List of tickets near breach
+    pagination:
+      $ref: '../schemas/common.yaml#/Pagination'
+      description: Pagination information

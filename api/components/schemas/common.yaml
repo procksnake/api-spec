@@ -12,6 +12,7 @@ Error:
         - auth.access_token.invalid_audience
         - auth.api_key.invalid
         - auth.invalid_credential
+        - auth.unauthorized
         - database.not_found
         - database.conflict
         - database.invalid_foreign_key
@@ -40,6 +41,7 @@ Error:
         - ErrAuthAccessTokenInvalidIssuer
         - ErrAuthAccessTokenInvalidAudience
         - ErrAuthAPIKeyInvalid
+        - ErrAuthUnauthorized
         - ErrAuthInvalidCredential
         - ErrDatabaseNotFound
         - ErrDatabaseConflict

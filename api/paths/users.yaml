@@ -111,8 +111,6 @@ users:
         application/json:
           schema:
             $ref: "../components/schemas/user.yaml#/UserCreateRequest"
-    security:
-      - bearerAuth: ["read:admin"]
     responses:
       "201":
         description: User created

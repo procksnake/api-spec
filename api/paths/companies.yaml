@@ -111,8 +111,6 @@ companies:
         application/json:
           schema:
             $ref: "../components/schemas/company.yaml#/CompanyCreateRequest"
-    security:
-      - bearerAuth: ["read:admin"]
     responses:
       "201":
         description: Company created

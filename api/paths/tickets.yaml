@@ -1,0 +1,791 @@
+# Basic ticket management
+tickets:
+  get:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: List tickets
+    operationId: listTickets
+    parameters:
+      - name: page
+        in: query
+        description: Page number to retrieve
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        description: Number of items per page
+        required: false
+        schema:
+          type: integer
+          default: 30
+      - name: status
+        in: query
+        description: Filter by ticket status
+        required: false
+        schema:
+          type: string
+      - name: priority
+        in: query
+        description: Filter by ticket priority
+        required: false
+        schema:
+          type: string
+      - name: category
+        in: query
+        description: Filter by ticket category
+        required: false
+        schema:
+          type: string
+      - name: assignee
+        in: query
+        description: Filter by assignee ID
+        required: false
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "200":
+        description: Successfully retrieved ticket list
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketListResponse"
+
+  post:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Create ticket
+    operationId: createTicket
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/ticket.yaml#/TicketCreateRequest"
+    responses:
+      "201":
+        description: Ticket created successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketCreateResponse"
+
+ticket:
+  get:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Get ticket details
+    operationId: getTicket
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket to retrieve
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "200":
+        description: Successfully retrieved ticket
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketGetResponse"
+      "404":
+        description: Ticket not found
+
+  put:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Update ticket
+    operationId: updateTicket
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket to update
+        schema:
+          type: integer
+          format: uint64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/ticket.yaml#/TicketUpdateRequest"
+    responses:
+      "200":
+        description: Ticket updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketUpdateResponse"
+
+  delete:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Delete ticket
+    operationId: deleteTicket
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket to delete
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "204":
+        description: Ticket deleted successfully
+
+# Ticket sub-resources
+ticket-status:
+  patch:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Change ticket status
+    operationId: updateTicketStatus
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket
+        schema:
+          type: integer
+          format: uint64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/ticket.yaml#/TicketStatusUpdateRequest"
+    responses:
+      "200":
+        description: Ticket status updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketStatusUpdateResponse"
+
+ticket-priority:
+  patch:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Update ticket priority
+    operationId: updateTicketPriority
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket
+        schema:
+          type: integer
+          format: uint64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/ticket.yaml#/TicketPriorityUpdateRequest"
+    responses:
+      "200":
+        description: Ticket priority updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketPriorityUpdateResponse"
+
+ticket-assign:
+  patch:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Assign ticket to agent
+    operationId: assignTicket
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket
+        schema:
+          type: integer
+          format: uint64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/ticket.yaml#/TicketAssignRequest"
+    responses:
+      "200":
+        description: Ticket assigned successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketAssignResponse"
+
+ticket-comments:
+  get:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: List ticket comments
+    operationId: listTicketComments
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket
+        schema:
+          type: integer
+          format: uint64
+      - name: page
+        in: query
+        description: Page number to retrieve
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        description: Number of items per page
+        required: false
+        schema:
+          type: integer
+          default: 30
+    responses:
+      "200":
+        description: Successfully retrieved ticket comments
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketCommentListResponse"
+
+  post:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Add comment to ticket
+    operationId: addTicketComment
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket
+        schema:
+          type: integer
+          format: uint64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/ticket.yaml#/TicketCommentCreateRequest"
+    responses:
+      "201":
+        description: Comment added successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketCommentCreateResponse"
+
+ticket-attachments:
+  get:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: List ticket attachments
+    operationId: listTicketAttachments
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "200":
+        description: Successfully retrieved ticket attachments
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketAttachmentListResponse"
+
+  post:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Upload attachment to ticket
+    operationId: uploadTicketAttachment
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket
+        schema:
+          type: integer
+          format: uint64
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            $ref: "../components/schemas/ticket.yaml#/TicketAttachmentUploadRequest"
+    responses:
+      "201":
+        description: Attachment uploaded successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketAttachmentUploadResponse"
+
+ticket-sla-status:
+  get:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Get current SLA status
+    operationId: getTicketSLAStatus
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "200":
+        description: Successfully retrieved SLA status
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketSLAStatusResponse"
+
+ticket-escalate:
+  post:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Manually escalate ticket
+    operationId: escalateTicket
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket
+        schema:
+          type: integer
+          format: uint64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/ticket.yaml#/TicketEscalateRequest"
+    responses:
+      "200":
+        description: Ticket escalated successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketEscalateResponse"
+
+# SLA management
+sla-policies:
+  get:
+    x-ogen-operation-group: SLA
+    tags:
+      - SLA
+    summary: List SLA policies
+    operationId: listSLAPolicies
+    parameters:
+      - name: page
+        in: query
+        description: Page number to retrieve
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        description: Number of items per page
+        required: false
+        schema:
+          type: integer
+          default: 30
+    responses:
+      "200":
+        description: Successfully retrieved SLA policies
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/sla.yaml#/SLAPolicyListResponse"
+
+  post:
+    x-ogen-operation-group: SLA
+    tags:
+      - SLA
+    summary: Create SLA policy
+    operationId: createSLAPolicy
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/sla.yaml#/SLAPolicyCreateRequest"
+    responses:
+      "201":
+        description: SLA policy created successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/sla.yaml#/SLAPolicyCreateResponse"
+
+sla-policy:
+  get:
+    x-ogen-operation-group: SLA
+    tags:
+      - SLA
+    summary: Get SLA policy details
+    operationId: getSLAPolicy
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the SLA policy
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "200":
+        description: Successfully retrieved SLA policy
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/sla.yaml#/SLAPolicyGetResponse"
+
+  put:
+    x-ogen-operation-group: SLA
+    tags:
+      - SLA
+    summary: Update SLA policy
+    operationId: updateSLAPolicy
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the SLA policy
+        schema:
+          type: integer
+          format: uint64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/sla.yaml#/SLAPolicyUpdateRequest"
+    responses:
+      "200":
+        description: SLA policy updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/sla.yaml#/SLAPolicyUpdateResponse"
+
+  delete:
+    x-ogen-operation-group: SLA
+    tags:
+      - SLA
+    summary: Delete SLA policy
+    operationId: deleteSLAPolicy
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the SLA policy
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "204":
+        description: SLA policy deleted successfully
+
+sla-breaches:
+  get:
+    x-ogen-operation-group: SLA
+    tags:
+      - SLA
+    summary: List breached tickets
+    operationId: listSLABreaches
+    parameters:
+      - name: page
+        in: query
+        description: Page number to retrieve
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        description: Number of items per page
+        required: false
+        schema:
+          type: integer
+          default: 30
+    responses:
+      "200":
+        description: Successfully retrieved breached tickets
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/sla.yaml#/SLABreachListResponse"
+
+sla-near-breach:
+  get:
+    x-ogen-operation-group: SLA
+    tags:
+      - SLA
+    summary: List tickets near breach
+    operationId: listSLANearBreach
+    parameters:
+      - name: page
+        in: query
+        description: Page number to retrieve
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        description: Number of items per page
+        required: false
+        schema:
+          type: integer
+          default: 30
+    responses:
+      "200":
+        description: Successfully retrieved tickets near breach
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/sla.yaml#/SLANearBreachListResponse"
+
+# SLA advanced features
+ticket-timeline:
+  get:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Get full ticket timeline
+    operationId: getTicketTimeline
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "200":
+        description: Successfully retrieved ticket timeline
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketTimelineResponse"
+
+ticket-sla-times:
+  get:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Get SLA times
+    operationId: getTicketSLATimes
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "200":
+        description: Successfully retrieved SLA times
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketSLATimesResponse"
+
+ticket-pause-sla:
+  patch:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Pause SLA timer
+    operationId: pauseTicketSLA
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket
+        schema:
+          type: integer
+          format: uint64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/ticket.yaml#/TicketSLAPauseRequest"
+    responses:
+      "200":
+        description: SLA timer paused successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketSLAPauseResponse"
+
+ticket-resume-sla:
+  patch:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Resume SLA timer
+    operationId: resumeTicketSLA
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket
+        schema:
+          type: integer
+          format: uint64
+    responses:
+      "200":
+        description: SLA timer resumed successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+ticket-exempt-sla:
+  patch:
+    x-ogen-operation-group: Ticket
+    tags:
+      - Ticket
+    summary: Exempt ticket from SLA
+    operationId: exemptTicketSLA
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the ticket
+        schema:
+          type: integer
+          format: uint64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/ticket.yaml#/TicketSLAExemptRequest"
+    responses:
+      "200":
+        description: Ticket exempted from SLA successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket.yaml#/TicketSLAExemptResponse"
+
+# Configuration management
+ticket-categories:
+  get:
+    x-ogen-operation-group: TicketConfig
+    tags:
+      - TicketConfig
+    summary: List ticket categories
+    operationId: listTicketCategories
+    responses:
+      "200":
+        description: Successfully retrieved ticket categories
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket-config.yaml#/TicketCategoryListResponse"
+
+  post:
+    x-ogen-operation-group: TicketConfig
+    tags:
+      - TicketConfig
+    summary: Create ticket category
+    operationId: createTicketCategory
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/ticket-config.yaml#/TicketCategoryCreateRequest"
+    responses:
+      "201":
+        description: Ticket category created successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket-config.yaml#/TicketCategoryCreateResponse"
+
+ticket-priorities:
+  get:
+    x-ogen-operation-group: TicketConfig
+    tags:
+      - TicketConfig
+    summary: List ticket priorities
+    operationId: listTicketPriorities
+    responses:
+      "200":
+        description: Successfully retrieved ticket priorities
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket-config.yaml#/TicketPriorityListResponse"
+
+ticket-statuses:
+  get:
+    x-ogen-operation-group: TicketConfig
+    tags:
+      - TicketConfig
+    summary: List ticket statuses
+    operationId: listTicketStatuses
+    responses:
+      "200":
+        description: Successfully retrieved ticket statuses
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket-config.yaml#/TicketStatusListResponse"
+
+ticket-tags:
+  get:
+    x-ogen-operation-group: TicketConfig
+    tags:
+      - TicketConfig
+    summary: List ticket tags
+    operationId: listTicketTags
+    responses:
+      "200":
+        description: Successfully retrieved ticket tags
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/ticket-config.yaml#/TicketTagListResponse"

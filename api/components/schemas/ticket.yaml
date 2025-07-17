@@ -1,0 +1,526 @@
+TicketBase:
+  type: object
+  properties:
+    title:
+      type: string
+      example: "Unable to access dashboard"
+    description:
+      type: string
+      example: "User reports that the dashboard is not loading properly"
+    priority:
+      type: string
+      example: "medium"
+    status:
+      type: string
+      example: "open"
+    category:
+      type: string
+      example: "technical"
+    tags:
+      type: array
+      items:
+        type: string
+      example: ["dashboard", "login"]
+    customerId:
+      type: integer
+      format: uint64
+      example: 1
+    assigneeId:
+      type: integer
+      format: uint64
+      nullable: true
+      example: 2
+    companyId:
+      type: integer
+      format: uint64
+      example: 1
+  required:
+    - title
+    - description
+    - priority
+    - status
+    - category
+    - customerId
+    - companyId
+
+Ticket:
+  allOf:
+    - $ref: '#/TicketBase'
+    - type: object
+      properties:
+        id:
+          type: integer
+          format: uint64
+          example: 1
+        createdAt:
+          type: string
+          format: date-time
+          example: "2023-01-01T00:00:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2023-01-01T00:00:00Z"
+        resolvedAt:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2023-01-01T00:00:00Z"
+        closedAt:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2023-01-01T00:00:00Z"
+        slaPolicy:
+          $ref: '../schemas/sla.yaml#/SLAPolicy'
+        slaStatus:
+          $ref: '../schemas/sla.yaml#/SLAStatus'
+      required:
+        - id
+        - createdAt
+        - updatedAt
+
+TicketListResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/TicketListData'
+
+TicketGetResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/Ticket'
+
+TicketCreateRequest:
+  $ref: '#/TicketBase'
+
+TicketCreateResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/Ticket'
+
+TicketUpdateRequest:
+  $ref: '#/TicketBase'
+
+TicketUpdateResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/Ticket'
+
+TicketListData:
+  type: object
+  required:
+    - tickets
+    - pagination
+  properties:
+    tickets:
+      type: array
+      items:
+        $ref: '#/Ticket'
+      description: List of tickets
+    pagination:
+      $ref: '../schemas/common.yaml#/Pagination'
+      description: Pagination information
+
+# Ticket sub-resource requests/responses
+TicketStatusUpdateRequest:
+  type: object
+  properties:
+    status:
+      type: string
+      example: "in_progress"
+    reason:
+      type: string
+      example: "Started working on the issue"
+  required:
+    - status
+
+TicketStatusUpdateResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/Ticket'
+
+TicketPriorityUpdateRequest:
+  type: object
+  properties:
+    priority:
+      type: string
+      example: "high"
+    reason:
+      type: string
+      example: "Customer escalated the issue"
+  required:
+    - priority
+
+TicketPriorityUpdateResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/Ticket'
+
+TicketAssignRequest:
+  type: object
+  properties:
+    assigneeId:
+      type: integer
+      format: uint64
+      example: 2
+    reason:
+      type: string
+      example: "Assigning to technical specialist"
+  required:
+    - assigneeId
+
+TicketAssignResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/Ticket'
+
+# Comments
+TicketComment:
+  type: object
+  properties:
+    id:
+      type: integer
+      format: uint64
+      example: 1
+    ticketId:
+      type: integer
+      format: uint64
+      example: 1
+    userId:
+      type: integer
+      format: uint64
+      example: 1
+    content:
+      type: string
+      example: "I've started investigating this issue"
+    isInternal:
+      type: boolean
+      example: false
+    createdAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+    updatedAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+  required:
+    - id
+    - ticketId
+    - userId
+    - content
+    - isInternal
+    - createdAt
+    - updatedAt
+
+TicketCommentCreateRequest:
+  type: object
+  properties:
+    content:
+      type: string
+      example: "I've started investigating this issue"
+    isInternal:
+      type: boolean
+      example: false
+  required:
+    - content
+    - isInternal
+
+TicketCommentCreateResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/TicketComment'
+
+TicketCommentListResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/TicketCommentListData'
+
+TicketCommentListData:
+  type: object
+  required:
+    - comments
+    - pagination
+  properties:
+    comments:
+      type: array
+      items:
+        $ref: '#/TicketComment'
+      description: List of comments
+    pagination:
+      $ref: '../schemas/common.yaml#/Pagination'
+      description: Pagination information
+
+# Attachments
+TicketAttachment:
+  type: object
+  properties:
+    id:
+      type: integer
+      format: uint64
+      example: 1
+    ticketId:
+      type: integer
+      format: uint64
+      example: 1
+    fileName:
+      type: string
+      example: "screenshot.png"
+    fileSize:
+      type: integer
+      format: uint64
+      example: 1024
+    mimeType:
+      type: string
+      example: "image/png"
+    url:
+      type: string
+      format: uri
+      example: "https://example.com/files/screenshot.png"
+    uploadedBy:
+      type: integer
+      format: uint64
+      example: 1
+    createdAt:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+  required:
+    - id
+    - ticketId
+    - fileName
+    - fileSize
+    - mimeType
+    - url
+    - uploadedBy
+    - createdAt
+
+TicketAttachmentUploadRequest:
+  type: object
+  properties:
+    file:
+      type: string
+      format: binary
+      description: The file to upload
+  required:
+    - file
+
+TicketAttachmentUploadResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/TicketAttachment'
+
+TicketAttachmentListResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/TicketAttachment'
+
+# SLA Status
+TicketSLAStatusResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '../schemas/sla.yaml#/SLAStatus'
+
+# Escalation
+TicketEscalateRequest:
+  type: object
+  properties:
+    reason:
+      type: string
+      example: "Customer request for immediate attention"
+    escalateToId:
+      type: integer
+      format: uint64
+      example: 3
+  required:
+    - reason
+
+TicketEscalateResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/Ticket'
+
+# Timeline
+TicketTimelineEvent:
+  type: object
+  properties:
+    id:
+      type: integer
+      format: uint64
+      example: 1
+    ticketId:
+      type: integer
+      format: uint64
+      example: 1
+    eventType:
+      type: string
+      enum: [created, status_changed, priority_changed, assigned, comment_added, attachment_uploaded, escalated, sla_paused, sla_resumed, sla_exempted, sla_breached]
+      example: "status_changed"
+    userId:
+      type: integer
+      format: uint64
+      example: 1
+    description:
+      type: string
+      example: "Status changed from open to in_progress"
+    metadata:
+      type: object
+      nullable: true
+      example: {"from": "open", "to": "in_progress"}
+    timestamp:
+      type: string
+      format: date-time
+      example: "2023-01-01T00:00:00Z"
+  required:
+    - id
+    - ticketId
+    - eventType
+    - userId
+    - description
+    - timestamp
+
+TicketTimelineResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/TicketTimelineEvent'
+
+# SLA Times
+TicketSLATimes:
+  type: object
+  properties:
+    responseTime:
+      type: object
+      properties:
+        target:
+          type: integer
+          description: Target response time in minutes
+          example: 60
+        actual:
+          type: integer
+          nullable: true
+          description: Actual response time in minutes
+          example: 45
+        remaining:
+          type: integer
+          nullable: true
+          description: Time remaining in minutes
+          example: 15
+        breached:
+          type: boolean
+          example: false
+    resolutionTime:
+      type: object
+      properties:
+        target:
+          type: integer
+          description: Target resolution time in minutes
+          example: 480
+        actual:
+          type: integer
+          nullable: true
+          description: Actual resolution time in minutes
+          example: 420
+        remaining:
+          type: integer
+          nullable: true
+          description: Time remaining in minutes
+          example: 60
+        breached:
+          type: boolean
+          example: false
+    pausedTime:
+      type: integer
+      description: Total paused time in minutes
+      example: 30
+    exempted:
+      type: boolean
+      description: Whether ticket is exempted from SLA
+      example: false
+
+TicketSLATimesResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/TicketSLATimes'
+
+# SLA Control
+TicketSLAPauseRequest:
+  type: object
+  properties:
+    reason:
+      type: string
+      example: "Waiting for customer response"
+  required:
+    - reason
+
+TicketSLAPauseResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/Ticket'
+
+TicketSLAExemptRequest:
+  type: object
+  properties:
+    reason:
+      type: string
+      example: "Special customer request"
+  required:
+    - reason
+
+TicketSLAExemptResponse:
+  allOf:
+    - $ref: '../schemas/common.yaml#/APIResponse'
+    - type: object
+      properties:
+        data:
+          $ref: '#/Ticket'

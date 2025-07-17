@@ -16,75 +16,75 @@ query:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/rag.yaml#/RagQueryRequest'
+            $ref: "../components/schemas/rag.yaml#/RagQueryRequest"
           examples:
             simple_query:
               summary: Simple query
               value:
-                query: 'What is list comprehension in Python?'
+                query: "What is list comprehension in Python?"
                 sessionId: 1
             complex_query:
               summary: Complex query
               value:
-                query: 'Please explain in detail the methods to prevent overfitting in machine learning models'
-                sessionId: 'sess_987654321'
+                query: "Please explain in detail the methods to prevent overfitting in machine learning models"
+                sessionId: "sess_987654321"
                 options:
                   similarityThreshold: 0.8
                   maxSimilarQueries: 5
                   includeMetadata: true
     responses:
-      '200':
+      "200":
         description: Successfully processed response
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/rag.yaml#/RagQueryResponse'
+              $ref: "../components/schemas/rag.yaml#/RagQueryResponse"
             examples:
               success_response:
                 summary: Success response
                 value:
-                  queryId: 'query_abc123'
-                  sessionId: 'sess_123456789'
-                  response: 'List comprehension is a concise way to create lists in Python...'
+                  queryId: "query_abc123"
+                  sessionId: "sess_123456789"
+                  response: "List comprehension is a concise way to create lists in Python..."
                   sources:
-                    - sourceId: 'doc_001'
-                      title: 'Python Basic Syntax'
+                    - sourceId: "doc_001"
+                      title: "Python Basic Syntax"
                       relevanceScore: 0.95
-                      excerpt: 'The basic structure of list comprehension is...'
+                      excerpt: "The basic structure of list comprehension is..."
                   similarQueries:
-                    - query: 'How to create lists in Python'
+                    - query: "How to create lists in Python"
                       similarityScore: 0.87
-                      queryId: 'query_xyz789'
+                      queryId: "query_xyz789"
                   metadata:
                     processingTimeMs: 1250
                     vectorSearchTimeMs: 200
                     llmResponseTimeMs: 800
                     similarityCheckTimeMs: 50
-      '400':
+      "400":
         description: Bad request
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/common.yaml#/APIResponse'
+              $ref: "../components/schemas/common.yaml#/APIResponse"
             examples:
               invalid_query:
                 summary: Empty query
                 value:
-                  errorCode: 'INVALID_QUERY'
-                  message: 'Query is empty or too short'
-                  details: 'Query must be at least 2 characters long'
-      '429':
+                  errorCode: "INVALID_QUERY"
+                  message: "Query is empty or too short"
+                  details: "Query must be at least 2 characters long"
+      "429":
         description: Rate limit exceeded
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/common.yaml#/APIResponse'
-      '500':
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "500":
         description: Internal server error
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/common.yaml#/APIResponse'
+              $ref: "../components/schemas/common.yaml#/APIResponse"
 
 sessions:
   get:
@@ -109,12 +109,12 @@ sessions:
           type: integer
           default: 30
     responses:
-      '200':
+      "200":
         description: Successfully retrieved rag session list
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/rag.yaml#/RagSessionListResponse'
+              $ref: "../components/schemas/rag.yaml#/RagSessionListResponse"
 
   post:
     x-ogen-operation-group: Rag
@@ -127,16 +127,14 @@ sessions:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/rag.yaml#/RagSessionCreateRequest'
-    security:
-      - bearerAuth: ['read:admin']
+            $ref: "../components/schemas/rag.yaml#/RagSessionCreateRequest"
     responses:
-      '201':
+      "201":
         description: Rag session created
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/rag.yaml#/RagSessionCreateResponse'
+              $ref: "../components/schemas/rag.yaml#/RagSessionCreateResponse"
 
 session:
   get:
@@ -170,18 +168,18 @@ session:
           default: 0
         description: Number of queries to skip
     responses:
-      '200':
+      "200":
         description: Session information
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/rag.yaml#/RagSessionGetResponse'
-      '404':
+              $ref: "../components/schemas/rag.yaml#/RagSessionGetResponse"
+      "404":
         description: Session not found
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/common.yaml#/APIResponse'
+              $ref: "../components/schemas/common.yaml#/APIResponse"
 
   delete:
     x-ogen-operation-group: Rag
@@ -199,14 +197,14 @@ session:
           format: uint64
         description: Session ID to delete
     responses:
-      '204':
+      "204":
         description: Successfully deleted
-      '404':
+      "404":
         description: Session not found
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/common.yaml#/APIResponse'
+              $ref: "../components/schemas/common.yaml#/APIResponse"
 
 indexUpdate:
   post:
@@ -228,40 +226,40 @@ indexUpdate:
         description: Name of the RAG knowledge base index to update
         schema:
           type: string
-          example: 'knowledge-base'
+          example: "knowledge-base"
     responses:
-      '202':
+      "202":
         description: RAG index update process started successfully
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/rag.yaml#/RagIndexUpdateResponse'
+              $ref: "../components/schemas/rag.yaml#/RagIndexUpdateResponse"
             examples:
               success_response:
                 summary: Update started
                 value:
-                  status: 'accepted'
-                  message: 'RAG index update process started successfully'
-                  indexName: 'knowledge-base'
+                  status: "accepted"
+                  message: "RAG index update process started successfully"
+                  indexName: "knowledge-base"
                   estimatedDurationMinutes: 15
-      '400':
+      "400":
         description: Bad request
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/common.yaml#/APIResponse'
-      '409':
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "409":
         description: Index update already in progress
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/common.yaml#/APIResponse'
-      '500':
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "500":
         description: Internal server error
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/common.yaml#/APIResponse'
+              $ref: "../components/schemas/common.yaml#/APIResponse"
 
 indexStatus:
   get:
@@ -282,26 +280,26 @@ indexStatus:
         description: Name of the RAG knowledge base index
         schema:
           type: string
-          example: 'knowledge-base'
+          example: "knowledge-base"
     responses:
-      '200':
+      "200":
         description: RAG index status retrieved successfully
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/rag.yaml#/RagIndexStatusResponse'
+              $ref: "../components/schemas/rag.yaml#/RagIndexStatusResponse"
             examples:
               running_status:
                 summary: RAG index update in progress
                 value:
-                  indexName: 'knowledge-base'
-                  status: 'running'
+                  indexName: "knowledge-base"
+                  status: "running"
                   lastExecution:
-                    status: 'inProgress'
-                    startTime: '2025-06-05T10:30:00Z'
+                    status: "inProgress"
+                    startTime: "2025-06-05T10:30:00Z"
                     documentsProcessed: 1250
                     documentsFailed: 0
-                    duration: '5분 30초 (진행 중)'
+                    duration: "5분 30초 (진행 중)"
                     errorCount: 0
                     warningCount: 2
                     isCompleted: false
@@ -330,14 +328,14 @@ uploadDocument:
       content:
         multipart/form-data:
           schema:
-            $ref: '../components/schemas/rag.yaml#/RagUploadDocumentRequest'
+            $ref: "../components/schemas/rag.yaml#/RagUploadDocumentRequest"
     responses:
-      '200':
+      "200":
         description: Documents uploaded successfully
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/rag.yaml#/RagUploadDocumentResponse'
+              $ref: "../components/schemas/rag.yaml#/RagUploadDocumentResponse"
             examples:
               successful_upload:
                 summary: Documents uploaded successfully

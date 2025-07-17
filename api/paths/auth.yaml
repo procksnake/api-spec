@@ -10,14 +10,14 @@ login:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/auth.yaml#/AuthLoginRequest'
+            $ref: "../components/schemas/auth.yaml#/AuthLoginRequest"
     responses:
-      '200':
+      "200":
         description: Login success response
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/auth.yaml#/AuthLoginResponse'
+              $ref: "../components/schemas/auth.yaml#/AuthLoginResponse"
 
 logout:
   post:
@@ -26,15 +26,13 @@ logout:
       - Auth
     summary: User logout
     operationId: logout
-    security:
-      - bearerAuth: []
     responses:
-      '200':
+      "200":
         description: Logout success
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/common.yaml#/APIResponse'
+              $ref: "../components/schemas/common.yaml#/APIResponse"
 
 refresh:
   post:
@@ -44,14 +42,14 @@ refresh:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/auth.yaml#/AuthRefreshRequest'
+            $ref: "../components/schemas/auth.yaml#/AuthRefreshRequest"
     responses:
-      '200':
+      "200":
         description: Tokens issued
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/auth.yaml#/AuthRefreshResponse'
+              $ref: "../components/schemas/auth.yaml#/AuthRefreshResponse"
 
 validate:
   post:
@@ -65,17 +63,17 @@ validate:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/auth.yaml#/AuthValidateRequest'
+            $ref: "../components/schemas/auth.yaml#/AuthValidateRequest"
     responses:
-      '200':
+      "200":
         description: Token validation success response
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/auth.yaml#/AuthValidateResponse'
-      '401':
+              $ref: "../components/schemas/auth.yaml#/AuthValidateResponse"
+      "401":
         description: Invalid or expired token
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/common.yaml#/APIResponse'
+              $ref: "../components/schemas/common.yaml#/APIResponse"
