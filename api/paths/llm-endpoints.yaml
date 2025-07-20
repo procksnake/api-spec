@@ -589,7 +589,7 @@ llm-endpoints-log:
     description: Retrieve detailed information for a specific log entry
     operationId: getLLMEndpointsLog
     parameters:
-      - name: logId
+      - name: logID
         in: path
         required: true
         description: ID of the log entry to retrieve
@@ -899,7 +899,8 @@ llm-endpoints-events-stream:
           type: array
           items:
             type: string
-            enum: [endpoint_status, error_alert, performance_alert, system_event]
+            enum:
+              [endpoint_status, error_alert, performance_alert, system_event]
         style: form
         explode: false
     responses:
