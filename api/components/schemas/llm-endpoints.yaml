@@ -349,3 +349,747 @@ LLMEndpointHealthResponse:
         data:
           $ref: "#/LLMEndpointHealthData"
 
+# ==================== ANALYTICS SCHEMAS ====================
+DashboardMetricsData:
+  type: object
+  required:
+    - total_endpoints
+    - active_endpoints
+    - total_requests
+    - success_rate
+    - avg_response_time
+    - last_updated
+  properties:
+    total_endpoints:
+      type: integer
+      description: Total number of configured LLM endpoints
+      example: 12
+    active_endpoints:
+      type: integer
+      description: Number of currently active endpoints
+      example: 8
+    inactive_endpoints:
+      type: integer
+      description: Number of currently inactive endpoints
+      example: 4
+    total_requests:
+      type: integer
+      description: Total number of requests processed
+      example: 15847
+    total_requests_today:
+      type: integer
+      description: Number of requests processed today
+      example: 1284
+    success_rate:
+      type: number
+      format: float
+      description: Overall success rate as percentage
+      example: 98.2
+    error_rate:
+      type: number
+      format: float
+      description: Overall error rate as percentage
+      example: 1.8
+    avg_response_time:
+      type: integer
+      description: Average response time in milliseconds
+      example: 245
+    peak_requests_per_minute:
+      type: integer
+      description: Peak requests per minute
+      example: 156
+    system_uptime:
+      type: number
+      format: float
+      description: System uptime percentage
+      example: 99.98
+    last_updated:
+      type: string
+      format: date-time
+      description: Last update timestamp
+      example: "2024-01-20T14:30:15Z"
+
+DashboardMetricsResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/DashboardMetricsData"
+
+EndpointMetricsData:
+  type: object
+  required:
+    - endpoint_id
+    - endpoint_name
+    - request_count
+    - success_rate
+    - avg_response_time
+    - status
+  properties:
+    endpoint_id:
+      type: string
+      description: Unique identifier for the endpoint
+      example: "endpoint-123"
+    endpoint_name:
+      type: string
+      description: Human-readable name of the endpoint
+      example: "OpenAI GPT-4"
+    request_count:
+      type: integer
+      description: Total number of requests to this endpoint
+      example: 1247
+    success_count:
+      type: integer
+      description: Number of successful requests
+      example: 1223
+    error_count:
+      type: integer
+      description: Number of failed requests
+      example: 24
+    success_rate:
+      type: number
+      format: float
+      description: Success rate as percentage
+      example: 98.1
+    avg_response_time:
+      type: integer
+      description: Average response time in milliseconds
+      example: 234
+    min_response_time:
+      type: integer
+      description: Minimum response time in milliseconds
+      example: 89
+    max_response_time:
+      type: integer
+      description: Maximum response time in milliseconds
+      example: 2156
+    last_request_at:
+      type: string
+      format: date-time
+      description: Timestamp of last request
+      example: "2024-01-20T14:28:45Z"
+    last_health_check:
+      type: string
+      format: date-time
+      description: Timestamp of last health check
+      example: "2024-01-20T14:30:00Z"
+    status:
+      type: string
+      enum: [active, inactive, error]
+      description: Current status of the endpoint
+      example: "active"
+
+EndpointMetricsResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/EndpointMetricsData"
+
+TrafficDataPoint:
+  type: object
+  required:
+    - timestamp
+    - request_count
+    - success_count
+    - error_count
+  properties:
+    timestamp:
+      type: string
+      format: date-time
+      description: Data point timestamp
+      example: "2024-01-20T14:00:00Z"
+    request_count:
+      type: integer
+      description: Number of requests in this time period
+      example: 156
+    success_count:
+      type: integer
+      description: Number of successful requests
+      example: 152
+    error_count:
+      type: integer
+      description: Number of failed requests
+      example: 4
+    avg_response_time:
+      type: integer
+      description: Average response time in milliseconds
+      example: 245
+
+TrafficData:
+  type: object
+  required:
+    - time_range
+    - granularity
+    - data_points
+  properties:
+    time_range:
+      type: string
+      description: Time range for the data
+      example: "24h"
+    granularity:
+      type: string
+      description: Data granularity
+      example: "hour"
+    data_points:
+      type: array
+      items:
+        $ref: "#/TrafficDataPoint"
+      description: Array of traffic data points
+
+TrafficDataResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/TrafficData"
+
+PerformanceMetricsData:
+  type: object
+  required:
+    - cpu_usage
+    - memory_usage
+    - active_connections
+  properties:
+    cpu_usage:
+      type: number
+      format: float
+      description: CPU usage percentage
+      example: 45.2
+    memory_usage:
+      type: number
+      format: float
+      description: Memory usage percentage
+      example: 68.7
+    disk_usage:
+      type: number
+      format: float
+      description: Disk usage percentage
+      example: 34.1
+    network_io:
+      type: object
+      properties:
+        bytes_in:
+          type: integer
+          description: Network bytes received
+          example: 1048576
+        bytes_out:
+          type: integer
+          description: Network bytes sent
+          example: 2097152
+    active_connections:
+      type: integer
+      description: Number of active connections
+      example: 23
+    queue_size:
+      type: integer
+      description: Current queue size
+      example: 5
+
+PerformanceMetricsResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/PerformanceMetricsData"
+
+# ==================== LOGS SCHEMAS ====================
+LogEntry:
+  type: object
+  required:
+    - id
+    - timestamp
+    - level
+    - message
+  properties:
+    id:
+      type: string
+      description: Unique identifier for the log entry
+      example: "log-123456"
+    timestamp:
+      type: string
+      format: date-time
+      description: Log entry timestamp
+      example: "2024-01-20T14:30:15Z"
+    level:
+      type: string
+      enum: [error, warning, info, debug]
+      description: Log severity level
+      example: "error"
+    message:
+      type: string
+      description: Log message content
+      example: "Failed to connect to endpoint: openai-gpt4"
+    endpoint_id:
+      type: string
+      nullable: true
+      description: Related endpoint ID if applicable
+      example: "endpoint-123"
+    endpoint_name:
+      type: string
+      nullable: true
+      description: Related endpoint name if applicable
+      example: "OpenAI GPT-4"
+    request_id:
+      type: string
+      nullable: true
+      description: Related request ID if applicable
+      example: "req-789"
+    user_id:
+      type: string
+      nullable: true
+      description: Related user ID if applicable
+      example: "user-456"
+    metadata:
+      type: object
+      additionalProperties: true
+      description: Additional metadata for the log entry
+    stack_trace:
+      type: string
+      nullable: true
+      description: Stack trace for error logs
+      example: "Error: Connection failed\n    at connect..."
+
+LogListData:
+  type: object
+  required:
+    - logs
+    - pagination
+  properties:
+    logs:
+      type: array
+      items:
+        $ref: "#/LogEntry"
+      description: Array of log entries
+    pagination:
+      $ref: "../schemas/common.yaml#/Pagination"
+      description: Pagination information
+
+LogListResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/LogListData"
+
+LogEntryResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/LogEntry"
+
+LogSearchRequest:
+  type: object
+  properties:
+    query:
+      type: string
+      description: Search query string
+      example: "connection failed"
+    level:
+      type: array
+      items:
+        type: string
+        enum: [error, warning, info, debug]
+      description: Filter by log levels
+      example: ["error", "warning"]
+    endpoint_ids:
+      type: array
+      items:
+        type: string
+      description: Filter by endpoint IDs
+      example: ["endpoint-123", "endpoint-456"]
+    start_date:
+      type: string
+      format: date-time
+      description: Start date for filtering
+      example: "2024-01-20T00:00:00Z"
+    end_date:
+      type: string
+      format: date-time
+      description: End date for filtering
+      example: "2024-01-20T23:59:59Z"
+    include_stack_trace:
+      type: boolean
+      default: false
+      description: Include stack traces in results
+    page:
+      type: integer
+      minimum: 1
+      default: 1
+      description: Page number
+    limit:
+      type: integer
+      minimum: 1
+      maximum: 100
+      default: 50
+      description: Number of items per page
+
+# ==================== CONFIGURATION SCHEMAS ====================
+SystemConfigData:
+  type: object
+  required:
+    - request_timeout
+    - log_retention_days
+    - auto_failover
+  properties:
+    request_timeout:
+      type: integer
+      description: Default request timeout in seconds
+      example: 30
+    log_retention_days:
+      type: integer
+      description: Log retention period in days
+      example: 30
+    auto_failover:
+      type: boolean
+      description: Enable automatic failover
+      example: true
+    rate_limiting:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Enable rate limiting
+          example: true
+        requests_per_minute:
+          type: integer
+          description: Maximum requests per minute
+          example: 100
+        burst_limit:
+          type: integer
+          description: Burst limit for rate limiting
+          example: 150
+    session_timeout:
+      type: integer
+      description: Session timeout in minutes
+      example: 30
+    two_factor_auth:
+      type: boolean
+      description: Enable two-factor authentication
+      example: false
+    dashboard_refresh_rate:
+      type: integer
+      description: Dashboard refresh rate in seconds
+      example: 10
+    theme_preference:
+      type: string
+      enum: [light, dark, auto]
+      description: Theme preference
+      example: "auto"
+    animations_enabled:
+      type: boolean
+      description: Enable UI animations
+      example: true
+
+SystemConfigResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/SystemConfigData"
+
+SystemConfigUpdateRequest:
+  type: object
+  properties:
+    request_timeout:
+      type: integer
+      minimum: 5
+      maximum: 300
+      description: Default request timeout in seconds
+    log_retention_days:
+      type: integer
+      minimum: 1
+      maximum: 365
+      description: Log retention period in days
+    auto_failover:
+      type: boolean
+      description: Enable automatic failover
+    rate_limiting:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Enable rate limiting
+        requests_per_minute:
+          type: integer
+          minimum: 1
+          description: Maximum requests per minute
+        burst_limit:
+          type: integer
+          minimum: 1
+          description: Burst limit for rate limiting
+    session_timeout:
+      type: integer
+      minimum: 5
+      maximum: 480
+      description: Session timeout in minutes
+    two_factor_auth:
+      type: boolean
+      description: Enable two-factor authentication
+    dashboard_refresh_rate:
+      type: integer
+      minimum: 5
+      maximum: 300
+      description: Dashboard refresh rate in seconds
+    theme_preference:
+      type: string
+      enum: [light, dark, auto]
+      description: Theme preference
+    animations_enabled:
+      type: boolean
+      description: Enable UI animations
+
+NotificationChannel:
+  type: object
+  required:
+    - type
+    - enabled
+  properties:
+    type:
+      type: string
+      enum: [email, slack, webhook]
+      description: Notification channel type
+    enabled:
+      type: boolean
+      description: Whether this channel is enabled
+    config:
+      type: object
+      additionalProperties: true
+      description: Channel-specific configuration
+
+NotificationConfigData:
+  type: object
+  required:
+    - email_notifications
+    - alert_threshold_error_rate
+  properties:
+    email_notifications:
+      type: boolean
+      description: Enable email notifications
+      example: true
+    slack_integration:
+      type: boolean
+      description: Enable Slack integration
+      example: false
+    slack_webhook_url:
+      type: string
+      nullable: true
+      description: Slack webhook URL
+      example: "https://hooks.slack.com/services/..."
+    alert_threshold_error_rate:
+      type: number
+      format: float
+      description: Error rate threshold for alerts (percentage)
+      example: 5.0
+    alert_threshold_response_time:
+      type: integer
+      description: Response time threshold for alerts (milliseconds)
+      example: 2000
+    notification_channels:
+      type: array
+      items:
+        $ref: "#/NotificationChannel"
+      description: List of notification channels
+
+NotificationConfigResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/NotificationConfigData"
+
+NotificationConfigUpdateRequest:
+  type: object
+  properties:
+    email_notifications:
+      type: boolean
+      description: Enable email notifications
+    slack_integration:
+      type: boolean
+      description: Enable Slack integration
+    slack_webhook_url:
+      type: string
+      nullable: true
+      description: Slack webhook URL
+    alert_threshold_error_rate:
+      type: number
+      format: float
+      minimum: 0
+      maximum: 100
+      description: Error rate threshold for alerts (percentage)
+    alert_threshold_response_time:
+      type: integer
+      minimum: 100
+      description: Response time threshold for alerts (milliseconds)
+    notification_channels:
+      type: array
+      items:
+        $ref: "#/NotificationChannel"
+      description: List of notification channels
+
+# ==================== HEALTH SCHEMAS ====================
+EndpointsStatus:
+  type: object
+  required:
+    - total
+    - healthy
+    - unhealthy
+  properties:
+    total:
+      type: integer
+      description: Total number of endpoints
+      example: 12
+    healthy:
+      type: integer
+      description: Number of healthy endpoints
+      example: 8
+    unhealthy:
+      type: integer
+      description: Number of unhealthy endpoints
+      example: 4
+
+SystemHealthData:
+  type: object
+  required:
+    - status
+    - uptime
+    - version
+    - endpoints_status
+    - last_check
+  properties:
+    status:
+      type: string
+      enum: [healthy, degraded, unhealthy]
+      description: Overall system health status
+      example: "healthy"
+    uptime:
+      type: number
+      format: float
+      description: System uptime percentage
+      example: 99.98
+    version:
+      type: string
+      description: System version
+      example: "1.0.0"
+    endpoints_status:
+      $ref: "#/EndpointsStatus"
+    last_check:
+      type: string
+      format: date-time
+      description: Last health check timestamp
+      example: "2024-01-20T14:30:00Z"
+
+SystemHealthResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/SystemHealthData"
+
+HealthCheck:
+  type: object
+  required:
+    - status
+    - response_time
+  properties:
+    status:
+      type: string
+      enum: [healthy, unhealthy]
+      description: Health check status
+    response_time:
+      type: integer
+      description: Response time in milliseconds
+      example: 45
+
+ExternalApiHealth:
+  allOf:
+    - $ref: "#/HealthCheck"
+    - type: object
+      required:
+        - name
+        - last_check
+      properties:
+        name:
+          type: string
+          description: External API name
+          example: "OpenAI API"
+        last_check:
+          type: string
+          format: date-time
+          description: Last check timestamp
+          example: "2024-01-20T14:30:00Z"
+
+SystemResourcesHealth:
+  type: object
+  required:
+    - cpu_usage
+    - memory_usage
+    - disk_usage
+  properties:
+    cpu_usage:
+      type: number
+      format: float
+      description: CPU usage percentage
+      example: 45.2
+    memory_usage:
+      type: number
+      format: float
+      description: Memory usage percentage
+      example: 68.7
+    disk_usage:
+      type: number
+      format: float
+      description: Disk usage percentage
+      example: 34.1
+
+DetailedHealthChecks:
+  type: object
+  required:
+    - database
+    - redis
+    - external_apis
+  properties:
+    database:
+      $ref: "#/HealthCheck"
+    redis:
+      $ref: "#/HealthCheck"
+    external_apis:
+      type: array
+      items:
+        $ref: "#/ExternalApiHealth"
+
+DetailedHealthData:
+  type: object
+  required:
+    - status
+    - checks
+    - system_resources
+  properties:
+    status:
+      type: string
+      enum: [healthy, degraded, unhealthy]
+      description: Overall system health status
+      example: "healthy"
+    checks:
+      $ref: "#/DetailedHealthChecks"
+    system_resources:
+      $ref: "#/SystemResourcesHealth"
+
+DetailedHealthResponse:
+  allOf:
+    - $ref: "../schemas/common.yaml#/APIResponse"
+    - type: object
+      properties:
+        data:
+          $ref: "#/DetailedHealthData"
+

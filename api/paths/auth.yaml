@@ -36,6 +36,9 @@ logout:
 
 refresh:
   post:
+    x-ogen-operation-group: Auth
+    tags:
+      - Auth
     summary: Reissue access token
     operationId: refresh
     requestBody:

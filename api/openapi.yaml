@@ -68,6 +68,37 @@ paths:
     $ref: "./paths/llm-endpoints.yaml#/llm-endpoint-test"
   /llm-endpoints/{id}/health:
     $ref: "./paths/llm-endpoints.yaml#/llm-endpoint-health"
+  # Analytics endpoints
+  /llm-endpoints/analytics/dashboard:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-analytics-dashboard"
+  /llm-endpoints/{id}/analytics/metrics:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoint-analytics-metrics"
+  /llm-endpoints/analytics/traffic:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-analytics-traffic"
+  /llm-endpoints/analytics/performance:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-analytics-performance"
+  # Logs endpoints
+  /llm-endpoints/logs:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-logs"
+  /llm-endpoints/logs/{logId}:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-log"
+  /llm-endpoints/logs/search:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-logs-search"
+  /llm-endpoints/logs/export:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-logs-export"
+  # Configuration endpoints
+  /llm-endpoints/config:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-config"
+  /llm-endpoints/config/notifications:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-config-notifications"
+  # System health endpoints
+  /llm-endpoints/system/health:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-system-health"
+  /llm-endpoints/system/health/detailed:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-system-health-detailed"
+  # Real-time events endpoints
+  /llm-endpoints/events/stream:
+    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-events-stream"
   # Tickets
   /tickets:
     $ref: "./paths/tickets.yaml#/tickets"

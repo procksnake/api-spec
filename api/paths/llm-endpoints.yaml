@@ -362,3 +362,556 @@ llm-endpoint-health:
           application/json:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
+
+# ==================== ANALYTICS ENDPOINTS ====================
+llm-endpoints-analytics-dashboard:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Get dashboard analytics metrics
+    description: Retrieve overall system metrics for the dashboard overview
+    operationId: getLLMEndpointsDashboardAnalytics
+    responses:
+      "200":
+        description: Dashboard metrics retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/DashboardMetricsResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+llm-endpoint-analytics-metrics:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Get endpoint-specific analytics metrics
+    description: Retrieve detailed metrics for a specific LLM endpoint
+    operationId: getLLMEndpointAnalyticsMetrics
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the LLM endpoint to retrieve metrics for
+        schema:
+          type: integer
+          format: uint64
+      - name: timeRange
+        in: query
+        description: Time range for metrics
+        required: false
+        schema:
+          type: string
+          enum: [1h, 24h, 7d, 30d]
+          default: 24h
+    responses:
+      "200":
+        description: Endpoint metrics retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/EndpointMetricsResponse"
+      "404":
+        description: LLM endpoint not found
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+llm-endpoints-analytics-traffic:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Get traffic patterns and trends
+    description: Retrieve traffic data for charts and analytics
+    operationId: getLLMEndpointsTrafficAnalytics
+    parameters:
+      - name: timeRange
+        in: query
+        description: Time range for traffic data
+        required: false
+        schema:
+          type: string
+          enum: [1h, 24h, 7d, 30d]
+          default: 24h
+      - name: granularity
+        in: query
+        description: Data granularity
+        required: false
+        schema:
+          type: string
+          enum: [minute, hour, day]
+          default: hour
+    responses:
+      "200":
+        description: Traffic data retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/TrafficDataResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+llm-endpoints-analytics-performance:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Get system performance metrics
+    description: Retrieve system-wide performance data
+    operationId: getLLMEndpointsPerformanceAnalytics
+    parameters:
+      - name: timeRange
+        in: query
+        description: Time range for performance data
+        required: false
+        schema:
+          type: string
+          enum: [1h, 24h, 7d, 30d]
+          default: 24h
+    responses:
+      "200":
+        description: Performance metrics retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/PerformanceMetricsResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+# ==================== LOGS ENDPOINTS ====================
+llm-endpoints-logs:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: List system logs
+    description: Retrieve paginated system logs with filtering options
+    operationId: listLLMEndpointsLogs
+    parameters:
+      - name: page
+        in: query
+        description: Page number to retrieve
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - name: limit
+        in: query
+        description: Number of items per page
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+      - name: level
+        in: query
+        description: Filter by log level
+        required: false
+        schema:
+          type: string
+          enum: [error, warning, info, debug]
+      - name: endpoint_id
+        in: query
+        description: Filter by endpoint ID
+        required: false
+        schema:
+          type: string
+      - name: start_date
+        in: query
+        description: Start date for filtering
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: end_date
+        in: query
+        description: End date for filtering
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: search
+        in: query
+        description: Search in log messages
+        required: false
+        schema:
+          type: string
+    responses:
+      "200":
+        description: Logs retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/LogListResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+llm-endpoints-log:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Get specific log entry
+    description: Retrieve detailed information for a specific log entry
+    operationId: getLLMEndpointsLog
+    parameters:
+      - name: logId
+        in: path
+        required: true
+        description: ID of the log entry to retrieve
+        schema:
+          type: string
+    responses:
+      "200":
+        description: Log entry retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/LogEntryResponse"
+      "404":
+        description: Log entry not found
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+llm-endpoints-logs-search:
+  post:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Advanced log search
+    description: Perform advanced search on logs with complex filters
+    operationId: searchLLMEndpointsLogs
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/llm-endpoints.yaml#/LogSearchRequest"
+    responses:
+      "200":
+        description: Search results retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/LogListResponse"
+      "400":
+        description: Invalid request data
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+llm-endpoints-logs-export:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Export logs
+    description: Export logs in various formats
+    operationId: exportLLMEndpointsLogs
+    parameters:
+      - name: format
+        in: query
+        required: true
+        description: Export format
+        schema:
+          type: string
+          enum: [json, csv, txt]
+      - name: level
+        in: query
+        description: Filter by log level
+        required: false
+        schema:
+          type: string
+          enum: [error, warning, info, debug]
+      - name: start_date
+        in: query
+        description: Start date for filtering
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: end_date
+        in: query
+        description: End date for filtering
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: endpoint_id
+        in: query
+        description: Filter by endpoint ID
+        required: false
+        schema:
+          type: string
+    responses:
+      "200":
+        description: Logs exported successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                download_url:
+                  type: string
+                  format: uri
+                expires_at:
+                  type: string
+                  format: date-time
+          text/csv:
+            schema:
+              type: string
+          text/plain:
+            schema:
+              type: string
+      "400":
+        description: Invalid request data
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+# ==================== CONFIGURATION ENDPOINTS ====================
+llm-endpoints-config:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Get system configuration
+    description: Retrieve current system configuration settings
+    operationId: getLLMEndpointsConfig
+    responses:
+      "200":
+        description: Configuration retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/SystemConfigResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+  put:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Update system configuration
+    description: Update system-wide configuration settings
+    operationId: updateLLMEndpointsConfig
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/llm-endpoints.yaml#/SystemConfigUpdateRequest"
+    responses:
+      "200":
+        description: Configuration updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/SystemConfigResponse"
+      "400":
+        description: Invalid request data
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+llm-endpoints-config-notifications:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Get notification settings
+    description: Retrieve notification and alert configuration
+    operationId: getLLMEndpointsNotificationConfig
+    responses:
+      "200":
+        description: Notification settings retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/NotificationConfigResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+  put:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Update notification settings
+    description: Update notification and alert configuration
+    operationId: updateLLMEndpointsNotificationConfig
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/llm-endpoints.yaml#/NotificationConfigUpdateRequest"
+    responses:
+      "200":
+        description: Notification settings updated successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/NotificationConfigResponse"
+      "400":
+        description: Invalid request data
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+# ==================== SYSTEM HEALTH ENDPOINTS ====================
+llm-endpoints-system-health:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Get system health status
+    description: Retrieve overall system health and status
+    operationId: getLLMEndpointsSystemHealth
+    responses:
+      "200":
+        description: System health retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/SystemHealthResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+llm-endpoints-system-health-detailed:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Get detailed health check
+    description: Retrieve comprehensive system health information
+    operationId: getLLMEndpointsDetailedSystemHealth
+    responses:
+      "200":
+        description: Detailed health information retrieved successfully
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/llm-endpoints.yaml#/DetailedHealthResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+
+# ==================== REAL-TIME EVENTS ENDPOINTS ====================
+llm-endpoints-events-stream:
+  get:
+    x-ogen-operation-group: LLMEndpoint
+    tags:
+      - LLMEndpoint
+    summary: Stream real-time events
+    description: Server-Sent Events endpoint for real-time system events
+    operationId: streamLLMEndpointsEvents
+    parameters:
+      - name: types
+        in: query
+        description: Filter by event types
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum: [endpoint_status, error_alert, performance_alert, system_event]
+        style: form
+        explode: false
+    responses:
+      "200":
+        description: Event stream established
+        content:
+          text/event-stream:
+            schema:
+              type: string
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
