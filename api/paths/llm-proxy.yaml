@@ -19,7 +19,7 @@ llm-proxy-endpoint:
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointGetResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/LLMEndpointGetResponse"
       "404":
         description: LLM endpoint not found
         content:
@@ -52,14 +52,14 @@ llm-proxy-endpoint:
       content:
         application/json:
           schema:
-            $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointUpdateRequest"
+            $ref: "../components/schemas/llm-proxy.yaml#/LLMEndpointUpdateRequest"
     responses:
       "200":
         description: LLM endpoint updated successfully
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointUpdateResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/LLMEndpointUpdateResponse"
       "400":
         description: Invalid request data
         content:
@@ -192,7 +192,7 @@ llm-proxy-endpoints:
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointListResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/LLMEndpointListResponse"
       "401":
         description: Unauthorized
         content:
@@ -211,14 +211,14 @@ llm-proxy-endpoints:
       content:
         application/json:
           schema:
-            $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointCreateRequest"
+            $ref: "../components/schemas/llm-proxy.yaml#/LLMEndpointCreateRequest"
     responses:
       "201":
         description: LLM endpoint created successfully
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointCreateResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/LLMEndpointCreateResponse"
       "400":
         description: Invalid request data
         content:
@@ -261,14 +261,14 @@ llm-proxy-endpoint-test:
       content:
         application/json:
           schema:
-            $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointTestRequest"
+            $ref: "../components/schemas/llm-proxy.yaml#/LLMEndpointTestRequest"
     responses:
       "200":
         description: Test completed successfully
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointTestResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/LLMEndpointTestResponse"
       "400":
         description: Invalid request data
         content:
@@ -312,7 +312,7 @@ llm-proxy-endpoint-health:
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointHealthResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/LLMEndpointHealthResponse"
       "404":
         description: LLM endpoint not found
         content:
@@ -349,7 +349,7 @@ llm-proxy-endpoint-health:
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/LLMEndpointHealthResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/LLMEndpointHealthResponse"
       "404":
         description: LLM endpoint not found
         content:
@@ -378,7 +378,7 @@ llm-proxy-analytics-dashboard:
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/DashboardMetricsResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/DashboardMetricsResponse"
       "401":
         description: Unauthorized
         content:
@@ -422,7 +422,7 @@ llm-proxy-endpoint-analytics-metrics:
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/EndpointMetricsResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/EndpointMetricsResponse"
       "404":
         description: LLM endpoint not found
         content:
@@ -467,7 +467,7 @@ llm-proxy-analytics-traffic:
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/TrafficDataResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/TrafficDataResponse"
       "401":
         description: Unauthorized
         content:
@@ -498,7 +498,7 @@ llm-proxy-analytics-performance:
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/PerformanceMetricsResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/PerformanceMetricsResponse"
       "401":
         description: Unauthorized
         content:
@@ -572,7 +572,7 @@ llm-proxy-logs:
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/LogListResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/LogListResponse"
       "401":
         description: Unauthorized
         content:
@@ -601,7 +601,7 @@ llm-proxy-log:
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/LogEntryResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/LogEntryResponse"
       "404":
         description: Log entry not found
         content:
@@ -628,14 +628,14 @@ llm-proxy-logs-search:
       content:
         application/json:
           schema:
-            $ref: "../components/schemas/llm-endpoints.yaml#/LogSearchRequest"
+            $ref: "../components/schemas/llm-proxy.yaml#/LogSearchRequest"
     responses:
       "200":
         description: Search results retrieved successfully
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/LogListResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/LogListResponse"
       "400":
         description: Invalid request data
         content:
@@ -740,7 +740,7 @@ llm-proxy-config:
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/SystemConfigResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/SystemConfigResponse"
       "401":
         description: Unauthorized
         content:
@@ -760,14 +760,14 @@ llm-proxy-config:
       content:
         application/json:
           schema:
-            $ref: "../components/schemas/llm-endpoints.yaml#/SystemConfigUpdateRequest"
+            $ref: "../components/schemas/llm-proxy.yaml#/SystemConfigUpdateRequest"
     responses:
       "200":
         description: Configuration updated successfully
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/SystemConfigResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/SystemConfigResponse"
       "400":
         description: Invalid request data
         content:
@@ -795,7 +795,7 @@ llm-proxy-config-notifications:
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/NotificationConfigResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/NotificationConfigResponse"
       "401":
         description: Unauthorized
         content:
@@ -815,14 +815,14 @@ llm-proxy-config-notifications:
       content:
         application/json:
           schema:
-            $ref: "../components/schemas/llm-endpoints.yaml#/NotificationConfigUpdateRequest"
+            $ref: "../components/schemas/llm-proxy.yaml#/NotificationConfigUpdateRequest"
     responses:
       "200":
         description: Notification settings updated successfully
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/NotificationConfigResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/NotificationConfigResponse"
       "400":
         description: Invalid request data
         content:
@@ -851,7 +851,7 @@ llm-proxy-system-health:
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/SystemHealthResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/SystemHealthResponse"
       "401":
         description: Unauthorized
         content:
@@ -873,7 +873,7 @@ llm-proxy-system-health-detailed:
         content:
           application/json:
             schema:
-              $ref: "../components/schemas/llm-endpoints.yaml#/DetailedHealthResponse"
+              $ref: "../components/schemas/llm-proxy.yaml#/DetailedHealthResponse"
       "401":
         description: Unauthorized
         content:
@@ -927,7 +927,7 @@ llm-proxy-chat-completions:
     description: |
       This endpoint provides chat completions with intelligent routing to configured LLM endpoints.
       Requests can be routed to specific endpoints or use automatic load balancing.
-      
+
       Features:
       - Automatic endpoint selection based on model and health
       - Load balancing across healthy endpoints
@@ -955,40 +955,7 @@ llm-proxy-chat-completions:
         application/json:
           schema:
             type: object
-            description: OpenAI-compatible chat completion request
-            properties:
-              model:
-                type: string
-                description: Model to use for completion
-                example: "gpt-4"
-              messages:
-                type: array
-                description: List of messages in the conversation
-                items:
-                  type: object
-                  properties:
-                    role:
-                      type: string
-                      enum: ["system", "user", "assistant"]
-                    content:
-                      type: string
-              temperature:
-                type: number
-                minimum: 0
-                maximum: 2
-                default: 1
-                description: Sampling temperature
-              max_tokens:
-                type: integer
-                minimum: 1
-                description: Maximum tokens to generate
-              stream:
-                type: boolean
-                default: false
-                description: Whether to stream back partial progress
-            required:
-              - model
-              - messages
+            description: Any valid request body (passed through as-is)
     responses:
       "200":
         description: Successful chat completion response
@@ -996,90 +963,8 @@ llm-proxy-chat-completions:
           application/json:
             schema:
               type: object
-              description: OpenAI-compatible chat completion response
-              properties:
-                id:
-                  type: string
-                  description: Unique identifier for the completion
-                object:
-                  type: string
-                  enum: ["chat.completion"]
-                created:
-                  type: integer
-                  description: Unix timestamp of creation
-                model:
-                  type: string
-                  description: Model used for the completion
-                choices:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      index:
-                        type: integer
-                      message:
-                        type: object
-                        properties:
-                          role:
-                            type: string
-                          content:
-                            type: string
-                      finish_reason:
-                        type: string
-                        enum: ["stop", "length", "content_filter"]
-                usage:
-                  type: object
-                  properties:
-                    prompt_tokens:
-                      type: integer
-                    completion_tokens:
-                      type: integer
-                    total_tokens:
-                      type: integer
-                endpoint_info:
-                  type: object
-                  description: Information about the endpoint that processed the request
-                  properties:
-                    endpoint_id:
-                      type: integer
-                    endpoint_name:
-                      type: string
-                    provider:
-                      type: string
-                    response_time_ms:
-                      type: number
-          text/event-stream:
-            schema:
-              type: string
-              description: Server-sent events for streaming responses
-      "400":
-        description: Invalid request data
-        content:
-          application/json:
-            schema:
-              $ref: "../components/schemas/common.yaml#/APIResponse"
-      "401":
-        description: Unauthorized
-        content:
-          application/json:
-            schema:
-              $ref: "../components/schemas/common.yaml#/APIResponse"
-      "429":
-        description: Rate limit exceeded
-        content:
-          application/json:
-            schema:
-              $ref: "../components/schemas/common.yaml#/APIResponse"
-      "503":
-        description: No healthy endpoints available
-        content:
-          application/json:
-            schema:
-              $ref: "../components/schemas/common.yaml#/APIResponse"
+              description: Response forwarded from backend service
+      "4XX":
+        description: Error response (forwarded from backend)
       "5XX":
-        description: Server error from underlying LLM provider
-        content:
-          application/json:
-            schema:
-              $ref: "../components/schemas/common.yaml#/APIResponse"
-
+        description: Server error (forwarded from backend)
