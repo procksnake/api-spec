@@ -1,10 +1,10 @@
-llm-endpoint:
+llm-proxy-endpoint:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Get a specific LLM endpoint
-    operationId: getLLMEndpoint
+    operationId: getLLMProxyEndpoint
     parameters:
       - name: id
         in: path
@@ -34,11 +34,11 @@ llm-endpoint:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
   put:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Update a specific LLM endpoint
-    operationId: updateLLMEndpoint
+    operationId: updateLLMProxyEndpoint
     parameters:
       - name: id
         in: path
@@ -80,11 +80,11 @@ llm-endpoint:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
   delete:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Delete a specific LLM endpoint
-    operationId: deleteLLMEndpoint
+    operationId: deleteLLMProxyEndpoint
     parameters:
       - name: id
         in: path
@@ -109,13 +109,13 @@ llm-endpoint:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
-llm-endpoints:
+llm-proxy-endpoints:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Get LLM endpoints list
-    operationId: listLLMEndpoints
+    operationId: listLLMProxyEndpoints
     parameters:
       - name: page
         in: query
@@ -201,11 +201,11 @@ llm-endpoints:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
   post:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Create LLM endpoint
-    operationId: createLLMEndpoint
+    operationId: createLLMProxyEndpoint
     requestBody:
       required: true
       content:
@@ -238,16 +238,16 @@ llm-endpoints:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
-llm-endpoint-test:
+llm-proxy-endpoint-test:
   post:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Test LLM endpoint connectivity
     description: |
       Tests the connectivity and functionality of a specific LLM endpoint
       by sending a test message and measuring response time.
-    operationId: testLLMEndpoint
+    operationId: testLLMProxyEndpoint
     parameters:
       - name: id
         in: path
@@ -288,16 +288,16 @@ llm-endpoint-test:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
-llm-endpoint-health:
+llm-proxy-endpoint-health:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Get LLM endpoint health status
     description: |
       Retrieves detailed health information for a specific LLM endpoint
       including uptime, error rates, and performance metrics.
-    operationId: getLLMEndpointHealth
+    operationId: getLLMProxyEndpointHealth
     parameters:
       - name: id
         in: path
@@ -327,14 +327,14 @@ llm-endpoint-health:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
   post:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Trigger manual health check
     description: |
       Manually triggers a health check for a specific LLM endpoint
       and returns the updated health status.
-    operationId: triggerLLMEndpointHealthCheck
+    operationId: triggerLLMProxyEndpointHealthCheck
     parameters:
       - name: id
         in: path
@@ -364,14 +364,14 @@ llm-endpoint-health:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
 # ==================== ANALYTICS ENDPOINTS ====================
-llm-endpoints-analytics-dashboard:
+llm-proxy-analytics-dashboard:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Get dashboard analytics metrics
     description: Retrieve overall system metrics for the dashboard overview
-    operationId: getLLMEndpointsDashboardAnalytics
+    operationId: getLLMProxyDashboardAnalytics
     responses:
       "200":
         description: Dashboard metrics retrieved successfully
@@ -392,14 +392,14 @@ llm-endpoints-analytics-dashboard:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
-llm-endpoint-analytics-metrics:
+llm-proxy-endpoint-analytics-metrics:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Get endpoint-specific analytics metrics
     description: Retrieve detailed metrics for a specific LLM endpoint
-    operationId: getLLMEndpointAnalyticsMetrics
+    operationId: getLLMProxyEndpointAnalyticsMetrics
     parameters:
       - name: id
         in: path
@@ -436,14 +436,14 @@ llm-endpoint-analytics-metrics:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
-llm-endpoints-analytics-traffic:
+llm-proxy-analytics-traffic:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Get traffic patterns and trends
     description: Retrieve traffic data for charts and analytics
-    operationId: getLLMEndpointsTrafficAnalytics
+    operationId: getLLMProxyTrafficAnalytics
     parameters:
       - name: timeRange
         in: query
@@ -475,14 +475,14 @@ llm-endpoints-analytics-traffic:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
-llm-endpoints-analytics-performance:
+llm-proxy-analytics-performance:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Get system performance metrics
     description: Retrieve system-wide performance data
-    operationId: getLLMEndpointsPerformanceAnalytics
+    operationId: getLLMProxyPerformanceAnalytics
     parameters:
       - name: timeRange
         in: query
@@ -507,14 +507,14 @@ llm-endpoints-analytics-performance:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
 # ==================== LOGS ENDPOINTS ====================
-llm-endpoints-logs:
+llm-proxy-logs:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: List system logs
     description: Retrieve paginated system logs with filtering options
-    operationId: listLLMEndpointsLogs
+    operationId: listLLMProxyLogs
     parameters:
       - name: page
         in: query
@@ -580,14 +580,14 @@ llm-endpoints-logs:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
-llm-endpoints-log:
+llm-proxy-log:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Get specific log entry
     description: Retrieve detailed information for a specific log entry
-    operationId: getLLMEndpointsLog
+    operationId: getLLMProxyLog
     parameters:
       - name: logID
         in: path
@@ -615,14 +615,14 @@ llm-endpoints-log:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
-llm-endpoints-logs-search:
+llm-proxy-logs-search:
   post:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Advanced log search
     description: Perform advanced search on logs with complex filters
-    operationId: searchLLMEndpointsLogs
+    operationId: searchLLMProxyLogs
     requestBody:
       required: true
       content:
@@ -649,14 +649,14 @@ llm-endpoints-logs-search:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
-llm-endpoints-logs-export:
+llm-proxy-logs-export:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Export logs
     description: Export logs in various formats
-    operationId: exportLLMEndpointsLogs
+    operationId: exportLLMProxyLogs
     parameters:
       - name: format
         in: query
@@ -726,14 +726,14 @@ llm-endpoints-logs-export:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
 # ==================== CONFIGURATION ENDPOINTS ====================
-llm-endpoints-config:
+llm-proxy-config:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Get system configuration
     description: Retrieve current system configuration settings
-    operationId: getLLMEndpointsConfig
+    operationId: getLLMProxyConfig
     responses:
       "200":
         description: Configuration retrieved successfully
@@ -749,12 +749,12 @@ llm-endpoints-config:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
   put:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Update system configuration
     description: Update system-wide configuration settings
-    operationId: updateLLMEndpointsConfig
+    operationId: updateLLMProxyConfig
     requestBody:
       required: true
       content:
@@ -781,14 +781,14 @@ llm-endpoints-config:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
-llm-endpoints-config-notifications:
+llm-proxy-config-notifications:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Get notification settings
     description: Retrieve notification and alert configuration
-    operationId: getLLMEndpointsNotificationConfig
+    operationId: getLLMProxyNotificationConfig
     responses:
       "200":
         description: Notification settings retrieved successfully
@@ -804,12 +804,12 @@ llm-endpoints-config-notifications:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
   put:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Update notification settings
     description: Update notification and alert configuration
-    operationId: updateLLMEndpointsNotificationConfig
+    operationId: updateLLMProxyNotificationConfig
     requestBody:
       required: true
       content:
@@ -837,14 +837,14 @@ llm-endpoints-config-notifications:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
 # ==================== SYSTEM HEALTH ENDPOINTS ====================
-llm-endpoints-system-health:
+llm-proxy-system-health:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Get system health status
     description: Retrieve overall system health and status
-    operationId: getLLMEndpointsSystemHealth
+    operationId: getLLMProxySystemHealth
     responses:
       "200":
         description: System health retrieved successfully
@@ -859,14 +859,14 @@ llm-endpoints-system-health:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
-llm-endpoints-system-health-detailed:
+llm-proxy-system-health-detailed:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Get detailed health check
     description: Retrieve comprehensive system health information
-    operationId: getLLMEndpointsDetailedSystemHealth
+    operationId: getLLMProxyDetailedSystemHealth
     responses:
       "200":
         description: Detailed health information retrieved successfully
@@ -882,14 +882,14 @@ llm-endpoints-system-health-detailed:
               $ref: "../components/schemas/common.yaml#/APIResponse"
 
 # ==================== REAL-TIME EVENTS ENDPOINTS ====================
-llm-endpoints-events-stream:
+llm-proxy-events-stream:
   get:
-    x-ogen-operation-group: LLMEndpoint
+    x-ogen-operation-group: LLMProxy
     tags:
-      - LLMEndpoint
+      - LLMProxy
     summary: Stream real-time events
     description: Server-Sent Events endpoint for real-time system events
-    operationId: streamLLMEndpointsEvents
+    operationId: streamLLMProxyEvents
     parameters:
       - name: types
         in: query
@@ -916,3 +916,170 @@ llm-endpoints-events-stream:
           application/json:
             schema:
               $ref: "../components/schemas/common.yaml#/APIResponse"
+
+# Chat Completions Endpoint (merged from chat service)
+llm-proxy-chat-completions:
+  post:
+    x-ogen-operation-group: LLMProxy
+    tags:
+      - LLMProxy
+    summary: Chat completions endpoint with intelligent routing
+    description: |
+      This endpoint provides chat completions with intelligent routing to configured LLM endpoints.
+      Requests can be routed to specific endpoints or use automatic load balancing.
+      
+      Features:
+      - Automatic endpoint selection based on model and health
+      - Load balancing across healthy endpoints
+      - Failover on endpoint failures
+      - OpenAI-compatible API format
+    operationId: chatCompletions
+    parameters:
+      - name: endpoint_id
+        in: query
+        required: false
+        description: Specific endpoint ID to route to (optional, uses load balancing if not specified)
+        schema:
+          type: integer
+          format: uint64
+      - name: model_preference
+        in: query
+        required: false
+        description: Preferred model to use (routes to endpoints with this model)
+        schema:
+          type: string
+          example: "gpt-4"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            description: OpenAI-compatible chat completion request
+            properties:
+              model:
+                type: string
+                description: Model to use for completion
+                example: "gpt-4"
+              messages:
+                type: array
+                description: List of messages in the conversation
+                items:
+                  type: object
+                  properties:
+                    role:
+                      type: string
+                      enum: ["system", "user", "assistant"]
+                    content:
+                      type: string
+              temperature:
+                type: number
+                minimum: 0
+                maximum: 2
+                default: 1
+                description: Sampling temperature
+              max_tokens:
+                type: integer
+                minimum: 1
+                description: Maximum tokens to generate
+              stream:
+                type: boolean
+                default: false
+                description: Whether to stream back partial progress
+            required:
+              - model
+              - messages
+    responses:
+      "200":
+        description: Successful chat completion response
+        content:
+          application/json:
+            schema:
+              type: object
+              description: OpenAI-compatible chat completion response
+              properties:
+                id:
+                  type: string
+                  description: Unique identifier for the completion
+                object:
+                  type: string
+                  enum: ["chat.completion"]
+                created:
+                  type: integer
+                  description: Unix timestamp of creation
+                model:
+                  type: string
+                  description: Model used for the completion
+                choices:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      index:
+                        type: integer
+                      message:
+                        type: object
+                        properties:
+                          role:
+                            type: string
+                          content:
+                            type: string
+                      finish_reason:
+                        type: string
+                        enum: ["stop", "length", "content_filter"]
+                usage:
+                  type: object
+                  properties:
+                    prompt_tokens:
+                      type: integer
+                    completion_tokens:
+                      type: integer
+                    total_tokens:
+                      type: integer
+                endpoint_info:
+                  type: object
+                  description: Information about the endpoint that processed the request
+                  properties:
+                    endpoint_id:
+                      type: integer
+                    endpoint_name:
+                      type: string
+                    provider:
+                      type: string
+                    response_time_ms:
+                      type: number
+          text/event-stream:
+            schema:
+              type: string
+              description: Server-sent events for streaming responses
+      "400":
+        description: Invalid request data
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "401":
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "429":
+        description: Rate limit exceeded
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "503":
+        description: No healthy endpoints available
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+      "5XX":
+        description: Server error from underlying LLM provider
+        content:
+          application/json:
+            schema:
+              $ref: "../components/schemas/common.yaml#/APIResponse"
+

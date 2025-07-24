@@ -38,8 +38,6 @@ paths:
   #  $ref: "./paths/azure-ai-search.yaml#/indexer-run"
   #/azure-ai-search/indexers/{indexer-name}/reset:
   #  $ref: "./paths/azure-ai-search.yaml#/indexer-reset"
-  /chat/completions:
-    $ref: "./paths/chat.yaml#/completions"
   /companies/{id}:
     $ref: "./paths/companies.yaml#/company"
   /companies:
@@ -60,45 +58,49 @@ paths:
     $ref: "./paths/users.yaml#/user"
   /users:
     $ref: "./paths/users.yaml#/users"
-  /llm-endpoints:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints"
-  /llm-endpoints/{id}:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoint"
-  /llm-endpoints/{id}/test:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoint-test"
-  /llm-endpoints/{id}/health:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoint-health"
+  # LLM Proxy endpoints (merged from llm-endpoints and chat)
+  /llm-proxy/endpoints:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-endpoints"
+  /llm-proxy/endpoints/{id}:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-endpoint"
+  /llm-proxy/endpoints/{id}/test:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-endpoint-test"
+  /llm-proxy/endpoints/{id}/health:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-endpoint-health"
+  # Chat completions endpoint (merged into llm-proxy)
+  /llm-proxy/chat/completions:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-chat-completions"
   # Analytics endpoints
-  /llm-endpoints/analytics/dashboard:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-analytics-dashboard"
-  /llm-endpoints/{id}/analytics/metrics:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoint-analytics-metrics"
-  /llm-endpoints/analytics/traffic:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-analytics-traffic"
-  /llm-endpoints/analytics/performance:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-analytics-performance"
+  /llm-proxy/analytics/dashboard:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-analytics-dashboard"
+  /llm-proxy/endpoints/{id}/analytics/metrics:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-endpoint-analytics-metrics"
+  /llm-proxy/analytics/traffic:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-analytics-traffic"
+  /llm-proxy/analytics/performance:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-analytics-performance"
   # Logs endpoints
-  /llm-endpoints/logs:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-logs"
-  /llm-endpoints/logs/{logId}:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-log"
-  /llm-endpoints/logs/search:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-logs-search"
-  /llm-endpoints/logs/export:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-logs-export"
+  /llm-proxy/logs:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-logs"
+  /llm-proxy/logs/{logID}:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-log"
+  /llm-proxy/logs/search:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-logs-search"
+  /llm-proxy/logs/export:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-logs-export"
   # Configuration endpoints
-  /llm-endpoints/config:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-config"
-  /llm-endpoints/config/notifications:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-config-notifications"
+  /llm-proxy/config:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-config"
+  /llm-proxy/config/notifications:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-config-notifications"
   # System health endpoints
-  /llm-endpoints/system/health:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-system-health"
-  /llm-endpoints/system/health/detailed:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-system-health-detailed"
+  /llm-proxy/system/health:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-system-health"
+  /llm-proxy/system/health/detailed:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-system-health-detailed"
   # Real-time events endpoints
-  /llm-endpoints/events/stream:
-    $ref: "./paths/llm-endpoints.yaml#/llm-endpoints-events-stream"
+  /llm-proxy/events/stream:
+    $ref: "./paths/llm-proxy.yaml#/llm-proxy-events-stream"
   # Tickets
   /tickets:
     $ref: "./paths/tickets.yaml#/tickets"

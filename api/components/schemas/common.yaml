@@ -87,7 +87,7 @@ Pagination:
     limit:
       type: integer
       description: Number of items per page
-    totalPages:
+    total_pages:
       type: integer
       description: Total number of pages
 
@@ -95,7 +95,7 @@ Pagination:
     - total
     - page
     - limit
-    - totalPages
+    - total_pages
 
 APIResponse:
   type: object
